@@ -9,8 +9,8 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
-	"stars/internal/config"
-	"stars/internal/server"
+	"github.com/jiangjiax/stars/internal/config"
+	"github.com/jiangjiax/stars/internal/server"
 )
 
 var (

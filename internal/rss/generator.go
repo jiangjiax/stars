@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"stars/internal/post"
+	"github.com/jiangjiax/stars/internal/post"
 	"time"
 )
 

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"stars/internal/cmd"
+	"github.com/jiangjiax/stars/internal/cmd"
 )
 
 func main() {

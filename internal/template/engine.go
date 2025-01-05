@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"stars/internal/asset"
-	"stars/internal/config"
-	"stars/internal/template/funcs"
+	"github.com/jiangjiax/stars/internal/asset"
+	"github.com/jiangjiax/stars/internal/config"
+	"github.com/jiangjiax/stars/internal/template/funcs"
 )
 
 type Engine struct {

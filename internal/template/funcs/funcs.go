@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"sort"
-	"stars/internal/asset"
+	"github.com/jiangjiax/stars/internal/asset"
 	"strings"
 	"time"
 )

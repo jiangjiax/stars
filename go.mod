@@ -1,4 +1,4 @@
-module stars
+module github.com/jiangjiax/stars
 
 go 1.21.1
 

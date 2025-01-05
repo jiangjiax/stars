@@ -6,7 +6,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/spf13/cobra"
-	"stars/internal/theme"
+	"github.com/jiangjiax/stars/internal/theme"
 )
 
 var themeCmd = &cobra.Command{

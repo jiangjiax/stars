@@ -24,7 +24,7 @@ import (
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	ghtml "github.com/yuin/goldmark/renderer/html"
-	"stars/internal/config"
+	"github.com/jiangjiax/stars/internal/config"
 )
 
 var cfg *config.Config

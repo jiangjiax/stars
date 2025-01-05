@@ -13,11 +13,11 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi"
-	"stars/internal/asset"
-	"stars/internal/config"
-	"stars/internal/post"
-	"stars/internal/rss"
-	"stars/internal/template"
+	"github.com/jiangjiax/stars/internal/asset"
+	"github.com/jiangjiax/stars/internal/config"
+	"github.com/jiangjiax/stars/internal/post"
+	"github.com/jiangjiax/stars/internal/rss"
+	"github.com/jiangjiax/stars/internal/template"
 )
 
 type Server struct {

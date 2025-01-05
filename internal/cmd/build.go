@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"stars/internal/asset"
-	"stars/internal/generator"
+	"github.com/jiangjiax/stars/internal/asset"
+	"github.com/jiangjiax/stars/internal/generator"
 )
 
 var buildCmd = &cobra.Command{

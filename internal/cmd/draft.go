@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
-	"stars/internal/post"
+	"github.com/jiangjiax/stars/internal/post"
 )
 
 var draftCmd = &cobra.Command{

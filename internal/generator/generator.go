@@ -13,10 +13,10 @@ import (
 	stdtmpl "text/template"
 	"time"
 
-	"stars/internal/config"
-	"stars/internal/post"
-	"stars/internal/template"
-	"stars/internal/template/funcs"
+	"github.com/jiangjiax/stars/internal/config"
+	"github.com/jiangjiax/stars/internal/post"
+	"github.com/jiangjiax/stars/internal/template"
+	"github.com/jiangjiax/stars/internal/template/funcs"
 	"github.com/go-git/go-git/v5"
 )
 

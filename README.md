@@ -1,6 +1,5 @@
 # Stars(繁星) - Web3 个人网站生成器
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/jiangjiax/stars)](https://goreportcard.com/report/github.com/jiangjiax/stars)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Release](https://img.shields.io/github/v/release/jiangjiax/stars)](https://github.com/jiangjiax/stars/releases)
 

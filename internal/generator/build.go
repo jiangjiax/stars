@@ -7,10 +7,10 @@ import (
 	"sort"
 	"strings"
 
-	"stars/internal/asset"
-	"stars/internal/post"
-	"stars/internal/rss"
-	"stars/internal/template"
+	"github.com/jiangjiax/stars/internal/asset"
+	"github.com/jiangjiax/stars/internal/post"
+	"github.com/jiangjiax/stars/internal/rss"
+	"github.com/jiangjiax/stars/internal/template"
 )
 
 // Build generates the static website from the project

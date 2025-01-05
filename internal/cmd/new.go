@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"stars/internal/generator"
+	"github.com/jiangjiax/stars/internal/generator"
 )
 
 var newCmd = &cobra.Command{
