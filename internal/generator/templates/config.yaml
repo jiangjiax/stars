@@ -1,0 +1,155 @@
+title: "my-blog"  # 博客标题
+description: "A Stars Web3 blog"  # 网站描述
+baseURL: "/"  # 网站根路径
+theme: "default"  # 主题名称
+
+# SEO 配置
+seo:
+  keywords: ["Web3", "区块链", "技术博客", "个人网站"]  # 关键词
+
+# 文章系列
+series:
+  - name: "Web3 探索"
+    description: "探索 Web3 的技术和应用，从基础概念到实践应用"
+    order: 2
+  - name: "人类升级计划"
+    description: "探讨认知提升、效率优化和个人成长"
+    order: 3
+  - name: "Stars 教程"
+    description: "使用 Stars 框架的教程"
+    order: 1
+  - name: "Go语言教程"
+    description: "使用 Stars 框架的教程"
+    order: 6
+
+# 个人信息
+author:
+  name: "Your Name"  # 姓名
+  title: "Software Engineer"  # 职位
+  avatar: "/static/images/avatar.jpg"  # 头像
+  bio: "热衷于 Web3 和云原生技术的开发者，正在构建去中心化的未来。"  # 个人简介
+  location: "中国，深圳" # 所在地
+  github: "" # 你的 GitHub 账号用户名
+  status: "正在寻找机会"  # 状态
+  walletAddress: "0x..." # 你的以太坊钱包地址
+  
+  # 技术栈
+  skills:
+    - name: "Go"
+      level: "精通"
+      percentage: 90
+    - name: "Rust"
+      level: "熟练"
+      percentage: 75
+    - name: "Web3"
+      level: "精通"
+      percentage: 90
+    - name: "云原生"
+      level: "精通"
+      percentage: 85
+
+  # 项目展示
+  projects:
+    - name: "Stars 博客引擎"
+      description: "基于 Go 和 Web3 构建的去中心化博客平台"
+      url: "https://github.com/yourusername/stars"
+      website: "https://stars-blog.com"
+      image: "/static/images/avatar.jpg"
+      highlights:
+        - "使用 Go 和现代 Web 技术构建"
+        - "集成 IPFS 实现去中心化存储"
+        - "支持 Web3 钱包登录"
+      tags: ["Go", "Web3", "IPFS"]
+      stars: 128
+      forks: 23
+    
+    - name: "量子 DeFi 协议"
+      description: "具有高级交易功能的下一代 DeFi 协议"
+      url: "https://github.com/yourusername/quantum-defi"
+      image: "/static/images/avatar.jpg"
+      highlights:
+        - "使用 Solidity 编写智能合约"
+        - "自动做市商机制"
+        - "跨链集成支持"
+      tags: ["Solidity", "DeFi", "Web3"]
+      stars: 256
+      forks: 45
+  
+  # 开源贡献
+  contributions:
+    - name: "Kubernetes"
+      description: "服务网格和容器运行时相关贡献"
+      url: "https://github.com/kubernetes/kubernetes"
+      contributions:
+        - "优化了服务网格的性能，提升了 30% 的请求处理能力"
+        - "重构了容器运行时接口，使其更易于扩展"
+        - "修复了多个关键的网络和存储问题"
+      impact: "改进被合并到主分支，目前服务于数百万用户"
+    
+    - name: "以太坊"
+      description: "智能合约开发工具"
+      url: "https://github.com/ethereum/go-ethereum"
+      contributions:
+        - "设计并实现了新的合约测试框架"
+        - "添加了智能合约升级和代理模式支持"
+        - "优化了 Gas 费用估算算法"
+      impact: "显著提升了开发体验，被多个主流 DApp 项目采用"
+
+  # 教育背景
+  education:
+    - school: "某某大学"
+      degree: "硕士学位"
+      major: "计算机科学与技术"
+      year: "2018 - 2021"
+      achievements:
+        - "国家奖学金获得者"
+        - "优秀毕业论文"
+        - "发表SCI论文2篇"
+
+  # 工作经历
+  experience:
+    - company: "某科技公司"
+      position: "高级开发工程师"
+      period: "2021.07 - 至今"
+      responsibilities:
+        - "负责公司核心业务系统的架构设计和开发"
+        - "带领团队完成微服务架构转型"
+        - "优化系统性能，提升用户体验"
+      technologies:
+        - "Go"
+        - "Kubernetes"
+        - "微服务"
+        - "Docker"
+
+  # 证书和资质
+  certifications:
+    - name: "AWS Certified Solutions Architect"
+      issuer: "Amazon Web Services"
+      date: "2023.06"
+    - name: "CNCF CKA"
+      issuer: "The Linux Foundation"
+      date: "2022.12"
+
+  # 联系方式
+  contact:
+    email: "your.email@example.com"    # 邮箱
+    wechat: "your_wechat_id"           # 微信号
+    phone: "+86 xxx xxxx xxxx"         # 手机号
+    telegram: "your_telegram"          
+    twitter: "your_twitter"            
+
+  # 推荐的文章系列
+  recommendedSeries:
+    - name: "Web3探索"
+      description: "探索 Web3 的技术和应用，从基础概念到实践应用"
+    - name: "技术前沿"
+      description: "关注最新技术趋势和创新实践"
+
+# 邮件订阅设置
+newsletter:
+  enabled: false  # 是否启用邮件订阅功能
+  provider: "buttondown"  # 邮件服务提供商
+  buttondown:
+    username: ""  # Buttondown 用户名
+    # apiKey: ""   # Buttondown API key (可选,用于后续功能扩展)
+  description: "订阅获取最新文章更新"  # 订阅描述文本
