@@ -57,8 +57,8 @@ tags:
 
 使用 `series` 和 `seriesOrder` 组织相关文章：
 
-- `series`: 系列名称
-- `seriesOrder`: 在系列中的顺序
+- `series`: 系列名称，必须和config.yaml中的series.name一致
+- `seriesOrder`: 在系列中的顺序，从1开始，如果seriesOrder为0，则不会显示在系列导航中
 
 ## Web3 相关配置
 
