@@ -79,6 +79,17 @@ func (p *Project) Generate() error {
 		}
 	}
 
+	// 使用 defer 处理错误清理
+	var success bool
+	defer func() {
+		if !success {
+			// 如果生成失败，清理创建的目录
+			if err := os.RemoveAll(p.Path); err != nil {
+				fmt.Fprintf(os.Stderr, "Warning: failed to clean up directory %s: %v\n", p.Path, err)
+			}
+		}
+	}()
+
 	// 2. 安装默认主题
 	if err := p.installDefaultTheme(); err != nil {
 		return fmt.Errorf("failed to install default theme: %w", err)
@@ -105,6 +116,8 @@ func (p *Project) Generate() error {
 		return fmt.Errorf("failed to generate config: %w", err)
 	}
 
+	// 标记生成成功
+	success = true
 	return nil
 }
 

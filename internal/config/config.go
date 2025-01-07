@@ -81,9 +81,9 @@ func (c *NFTConfig) ValidateNFTConfig() error {
 // GetDefaultNFTConfig 获取默认的 NFT 配置
 func GetDefaultNFTConfig() *NFTConfig {
 	return &NFTConfig{
-		Price:         "0.01",
-		MaxSupply:     100,
-		RoyaltyFee:    1000, // 10%
+		Price:         "0",
+		MaxSupply:     9999,
+		RoyaltyFee:    0,
 		OnePerAddress: true,
 		Version:       "1.0.0",
 	}
