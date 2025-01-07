@@ -13,11 +13,11 @@ import (
 	stdtmpl "text/template"
 	"time"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/jiangjiax/stars/internal/config"
 	"github.com/jiangjiax/stars/internal/post"
 	"github.com/jiangjiax/stars/internal/template"
 	"github.com/jiangjiax/stars/internal/template/funcs"
-	"github.com/go-git/go-git/v5"
 )
 
 //go:embed templates/config.yaml templates/example-posts/*
@@ -41,7 +41,7 @@ func (p *Project) Now() time.Time {
 }
 
 // New creates a new Stars blog project
-func New(path string) (*Project, error) {
+func New(path string, useTemplate bool) (*Project, error) {
 	name := filepath.Base(path)
 	p := &Project{
 		Path:        path,
@@ -50,10 +50,19 @@ func New(path string) (*Project, error) {
 		Date:        time.Now().Format("2006-01-02"),
 	}
 
-	// 配置模板创建
-	cfg, err := config.LoadFromTemplate(templates, "templates/config.yaml", p)
+	var cfg *config.Config
+	var err error
+
+	if useTemplate {
+		// 用于 new 命令：使用模板配置
+		cfg, err = config.LoadFromTemplate(templates, "templates/config.yaml", p)
+	} else {
+		// 用于 build 命令：使用项目配置
+		cfg, err = config.LoadConfig(filepath.Join(path, "config.yaml"))
+	}
+
 	if err != nil {
-		return nil, fmt.Errorf("failed to load config template: %w", err)
+		return nil, fmt.Errorf("failed to load config: %w", err)
 	}
 	p.Site = cfg
 
@@ -458,7 +467,7 @@ func min(a, b int) int {
 func (p *Project) installDefaultTheme() error {
 	themesDir := filepath.Join(p.Path, "themes")
 	defaultTheme := "default"
-	
+
 	// 使用 go-git 从 GitHub 克隆主题
 	_, err := git.PlainClone(
 		filepath.Join(themesDir, defaultTheme),

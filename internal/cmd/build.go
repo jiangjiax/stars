@@ -32,7 +32,7 @@ It processes all content, applies themes, and creates a deployable website.`,
 		}
 
 		// 创建生成器实例
-		gen, err := generator.New(projectDir)
+		gen, err := generator.New(projectDir, false)
 		if err != nil {
 			return fmt.Errorf("failed to create generator: %w", err)
 		}

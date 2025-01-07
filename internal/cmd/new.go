@@ -28,7 +28,7 @@ var newCmd = &cobra.Command{
 		}
 
 		// Create new project
-		project, err := generator.New(absPath)
+		project, err := generator.New(absPath, true)
 		if err != nil {
 			return fmt.Errorf("failed to create project: %w", err)
 		}
