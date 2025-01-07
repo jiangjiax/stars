@@ -54,33 +54,57 @@ func New(projectDir string, cfg *config.Config, port int) (*Server, error) {
 	// 创建文章存储
 	posts := post.New()
 
-	// 加载所有文章
+	// 递归加载所有文章
 	postsDir := filepath.Join(projectDir, "content/posts")
-	postFiles, err := os.ReadDir(postsDir)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read posts directory: %w", err)
-	}
+	err = filepath.Walk(postsDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
-	// 遍历并解析所有文章
-	for _, file := range postFiles {
-		if !file.IsDir() && strings.HasSuffix(file.Name(), ".md") {
-			filePath := filepath.Join(postsDir, file.Name())
-			parsePost, err := post.ParsePost(filePath)
-			if err != nil {
-				return nil, fmt.Errorf("failed to parse parsePost %s: %w", file.Name(), err)
-			}
+		// 跳过目录
+		if info.IsDir() {
+			return nil
+		}
 
-			// 如果没有验证信息或内容有变化，更新 contentHash
-			if parsePost.Verification == nil || parsePost.ContentChanged() {
-				if err := parsePost.UpdateContentHash(); err != nil {
-					return nil, fmt.Errorf("failed to update content hash: %w", err)
-				}
-			}
+		// 只处理 .md 文件
+		if !strings.HasSuffix(info.Name(), ".md") {
+			return nil
+		}
 
-			if err := posts.Add(parsePost); err != nil {
-				return nil, fmt.Errorf("failed to add parsePost %s: %w", file.Name(), err)
+		// 解析文章
+		parsePost, err := post.ParsePost(path)
+		if err != nil {
+			return fmt.Errorf("failed to parse post %s: %w", path, err)
+		}
+
+		// 如果没有验证信息或内容有变化，更新 contentHash
+		if parsePost.Verification == nil || parsePost.ContentChanged() {
+			if err := parsePost.UpdateContentHash(); err != nil {
+				return fmt.Errorf("failed to update content hash: %w", err)
 			}
 		}
+
+		// 如果没有设置 slug，使用相对路径作为 URL
+		if parsePost.Slug == "" {
+			relPath, err := filepath.Rel(postsDir, path)
+			if err != nil {
+				return fmt.Errorf("failed to get relative path: %w", err)
+			}
+			// 移除 .md 后缀
+			relPath = strings.TrimSuffix(relPath, ".md")
+			// 将路径分隔符转换为 URL 分隔符
+			parsePost.Slug = strings.ReplaceAll(relPath, string(filepath.Separator), "/")
+		}
+
+		if err := posts.Add(parsePost); err != nil {
+			return fmt.Errorf("failed to add post %s: %w", path, err)
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to load posts: %w", err)
 	}
 
 	// 创建服务器实例
@@ -114,7 +138,7 @@ func (s *Server) Start() error {
 			return
 		}
 
-		// 如果项目静��目录没有，则从主题静态目录提供
+		// 如果项目静态目录没有，则从主题静态目录提供
 		if f, err := themeFS.Open(r.URL.Path); err == nil {
 			f.Close()
 			http.FileServer(themeFS).ServeHTTP(w, r)

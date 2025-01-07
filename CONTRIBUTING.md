@@ -27,7 +27,8 @@
 2. 创建特性分支 (`git checkout -b feature/**`)
 3. 提交改动 (`git commit -m 'Add some amazing feature'`)
 4. 推送到分支 (`git push origin feature/**`)
-5. 打开 Pull Request
+5. 打开 Pull Request，并附上完整的功能描述
+6. 等待维护者审核
 
 ## 开发设置
 

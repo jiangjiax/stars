@@ -92,25 +92,45 @@ func (b *Builder) cleanPublicDir() error {
 
 // parsePosts reads and parses all markdown posts
 func (b *Builder) parsePosts() error {
-	postsDir := filepath.Join(b.project.Path, "content/posts")
-	entries, err := os.ReadDir(postsDir)
-	if err != nil {
-		return fmt.Errorf("failed to read posts directory: %w", err)
-	}
-
-	// Clear existing posts
-	b.project.Posts = nil
-
-	// Parse all posts
-	for _, entry := range entries {
-		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".md") {
-			postPath := filepath.Join(postsDir, entry.Name())
-			p, err := post.ParsePost(postPath)
-			if err != nil {
-				return fmt.Errorf("failed to parse post %s: %w", entry.Name(), err)
-			}
-			b.project.Posts = append(b.project.Posts, p)
+	postsDir := filepath.Join(b.project.Path, "content", "posts")
+	err := filepath.Walk(postsDir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
 		}
+
+		// 跳过目录
+		if info.IsDir() {
+			return nil
+		}
+
+		// 只处理 .md 文件
+		if !strings.HasSuffix(info.Name(), ".md") {
+			return nil
+		}
+
+		// 解析文章
+		post, err := post.ParsePost(path)
+		if err != nil {
+			return fmt.Errorf("failed to parse post %s: %w", path, err)
+		}
+
+		// 如果没有设置 slug，使用相对路径作为 URL
+		if post.Slug == "" {
+			relPath, err := filepath.Rel(postsDir, path)
+			if err != nil {
+				return fmt.Errorf("failed to get relative path: %w", err)
+			}
+			// 移除 .md 后缀
+			relPath = strings.TrimSuffix(relPath, ".md")
+			// 将路径分隔符转换为 URL 分隔符
+			post.Slug = strings.ReplaceAll(relPath, string(filepath.Separator), "/")
+		}
+
+		b.project.Posts = append(b.project.Posts, post)
+		return nil
+	})
+	if err != nil {
+		return fmt.Errorf("failed to parse posts: %w", err)
 	}
 
 	// Sort posts by series and order
