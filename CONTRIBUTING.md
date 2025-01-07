@@ -24,11 +24,12 @@
 ### Pull Request 流程
 
 1. Fork 项目
-2. 创建特性分支 (`git checkout -b feature/**`)
-3. 提交改动 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/**`)
-5. 打开 Pull Request，并附上完整的功能描述
-6. 等待维护者审核
+2. 切换到 dev 分支 (`git checkout dev`)
+3. 创建特性分支 (`git checkout -b feature/**`)
+4. 提交改动 (`git commit -m 'Add some amazing feature'`)
+5. 推送到分支 (`git push origin feature/**`)
+6. 打开 Pull Request，PR 从 feature/** 分支推送到 dev 分支
+7. 等待维护者审核
 
 ## 开发设置
 
