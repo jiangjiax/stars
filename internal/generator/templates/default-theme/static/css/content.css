@@ -1,0 +1,438 @@
+/* Markdown 内容样式 */
+.content {
+    /* 基本排版 */
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: var(--stars-text);
+}
+
+/* 标题层级 */
+.content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+    color: var(--stars-accent);
+    border-bottom: 1px solid var(--stars-accent-20);
+    padding-bottom: 0.5rem;
+}
+
+.content h2 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+    color: var(--stars-accent);
+}
+
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+    color: var(--stars-accent);
+}
+
+.content h4, .content h5, .content h6 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+    color: var(--stars-accent);
+}
+
+/* 段落 */
+.content p {
+    margin: 1rem 0;
+    line-height: 1.8;
+}
+
+/* 列表样式 */
+.content ul, .content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+/* 无序列表 */
+.content ul {
+    list-style: none;
+}
+
+.content ul li {
+    position: relative;
+    margin: 0.5rem 0;
+}
+
+.content ul li::before {
+    content: "•";
+    color: var(--stars-accent);
+    position: absolute;
+    left: -1.5rem;
+    font-size: 1.2em;
+}
+
+/* 有序列表 */
+.content ol {
+    list-style: decimal;
+    counter-reset: item;
+}
+
+.content ol li {
+    margin: 0.5rem 0;
+    padding-left: 0.5rem;
+}
+
+/* 嵌套列表 */
+.content ul ul,
+.content ul ol,
+.content ol ul,
+.content ol ol {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+/* 代码块 */
+.content pre {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--stars-secondary);
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    border: 1px solid var(--stars-accent-10);
+}
+
+.content pre code {
+    font-family: ui-monospace, monospace;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+/* 行内代码 */
+.content :not(pre) > code {
+    font-family: ui-monospace, monospace;
+    font-size: 0.9em;
+    background: var(--stars-secondary);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    color: var(--stars-accent);
+}
+
+/* 引用块 */
+.content blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--stars-accent);
+    background: var(--stars-secondary);
+    border-radius: 0 0.5rem 0.5rem 0;
+    color: var(--stars-muted);
+    font-style: italic;
+}
+
+.content blockquote p {
+    margin: 0.5rem 0;
+}
+
+/* 表格 */
+.content table {
+    @apply w-full my-6 border-collapse overflow-hidden rounded-lg;
+    border-spacing: 0;
+}
+
+.content th {
+    @apply bg-stars-accent/10 px-4 py-3 text-left font-semibold text-stars-accent border-b border-stars-accent/20;
+}
+
+.content td {
+    @apply px-4 py-3 border-b border-stars-accent/10;
+}
+
+.content tr {
+    @apply transition-colors hover:bg-stars-accent/5;
+}
+
+.content tr:last-child td {
+    @apply border-b-0;
+}
+
+/* 添加表格容器以支持横向滚动 */
+.content .table-wrapper {
+    @apply w-full overflow-x-auto my-6 rounded-lg border border-stars-accent/10;
+    /* 自定义滚动条样式 */
+    scrollbar-width: thin;
+    scrollbar-color: var(--stars-accent-20) transparent;
+}
+
+.content .table-wrapper::-webkit-scrollbar {
+    @apply h-1.5;
+}
+
+.content .table-wrapper::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+.content .table-wrapper::-webkit-scrollbar-thumb {
+    @apply bg-stars-accent/20 rounded-full hover:bg-stars-accent/30;
+}
+
+/* 确保表格在容器内部正确显示 */
+.content .table-wrapper table {
+    @apply my-0;
+    min-width: 100%;
+}
+
+/* 表格标题 */
+.content .table-wrapper caption {
+    @apply px-4 py-2 text-sm text-stars-muted text-center border-b border-stars-accent/10;
+}
+
+/* 水平线 */
+.content hr {
+    @apply my-8 border-0 h-px bg-gradient-to-r from-transparent via-stars-accent/20 to-transparent;
+}
+
+/* 链接 */
+.content a {
+    color: var(--stars-accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--stars-accent-30);
+    transition: all 0.3s ease;
+}
+
+.content a:hover {
+    color: var(--stars-gold);
+    border-bottom-style: solid;
+}
+
+/* 图片 */
+.content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem auto;
+    border-radius: 0.5rem;
+    display: block;
+}
+
+.content figure {
+    margin: 2rem 0;
+}
+
+.content figcaption {
+    text-align: center;
+    margin-top: 0.5rem;
+    color: var(--stars-muted);
+    font-size: 0.9em;
+}
+
+/* 任务列表 */
+.content .task-list-item {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.content .task-list-item::before {
+    display: none;
+}
+
+.content .task-list-item input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* 代码块标题 */
+.content .code-title {
+    margin-bottom: -0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--stars-secondary);
+    border: 1px solid var(--stars-accent-10);
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: var(--stars-muted);
+    font-size: 0.9em;
+    font-family: ui-monospace, monospace;
+}
+
+/* 数学公式 */
+.content .math {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--stars-secondary);
+    border-radius: 0.5rem;
+}
+
+/* 脚注 */
+.content .footnotes {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--stars-accent-20);
+    font-size: 0.9em;
+    color: var(--stars-muted);
+}
+
+/* 键盘按键 */
+.content kbd {
+    padding: 0.2em 0.4em;
+    background: var(--stars-secondary);
+    border: 1px solid var(--stars-accent-20);
+    border-radius: 0.25rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.9em;
+}
+
+/* 标记/高亮 */
+.content mark {
+    @apply bg-stars-accent/10 text-stars-accent px-1 py-0.5 rounded;
+    text-decoration: none;
+}
+
+/* 上标和下标 */
+.content sup, .content sub {
+    font-size: 0.75em;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .content {
+        font-size: 1rem;
+    }
+
+    .content h1 { font-size: 1.75rem; }
+    .content h2 { font-size: 1.5rem; }
+    .content h3 { font-size: 1.25rem; }
+    .content h4, .content h5, .content h6 { font-size: 1.1rem; }
+
+    .content pre, .content table {
+        font-size: 0.9em;
+    }
+} 
+
+/* 目录样式 */
+.table-of-contents-wrapper {
+    @apply bg-stars-primary/30 backdrop-blur-sm rounded-lg p-4 max-w-xs;
+}
+
+.table-of-contents {
+    @apply text-stars-text max-h-[calc(100vh-12rem)] overflow-y-auto;
+}
+
+.table-of-contents ul {
+    @apply list-none space-y-1;
+}
+
+.table-of-contents li {
+    @apply relative;
+}
+
+.toc-link {
+    @apply block py-1 px-2 text-sm text-stars-muted hover:text-stars-accent
+           border-l-2 border-transparent hover:border-stars-accent/50
+           transition-all duration-300 truncate;
+}
+
+/* 根据层级设置缩进 */
+.toc-link[data-level="1"] { @apply pl-2; }
+.toc-link[data-level="2"] { @apply pl-4; }
+.toc-link[data-level="3"] { @apply pl-6; }
+.toc-link[data-level="4"] { @apply pl-8; }
+.toc-link[data-level="5"] { @apply pl-10; }
+.toc-link[data-level="6"] { @apply pl-12; }
+
+/* 当前阅读位置高亮 */
+.toc-link.active {
+    @apply text-stars-accent border-stars-accent bg-stars-accent/5;
+}
+
+/* 滚动条样式 */
+.table-of-contents::-webkit-scrollbar {
+    @apply w-1.5;
+}
+
+.table-of-contents::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+.table-of-contents::-webkit-scrollbar-thumb {
+    @apply bg-stars-accent/20 rounded-full hover:bg-stars-accent/30;
+}
+
+/* 响应式调整 */
+@media (max-width: 1024px) {
+    .table-of-contents-wrapper {
+        @apply mb-8;
+    }
+    
+    .table-of-contents {
+        @apply max-h-[50vh];
+    }
+} 
+
+/* 目录样式 */
+.toc {
+    @apply text-sm text-stars-muted;
+}
+
+.toc ul {
+    @apply space-y-2;
+}
+
+.toc ul ul {
+    @apply ml-4 mt-2 space-y-1;
+}
+
+.toc a {
+    @apply block py-1 px-2 rounded-lg hover:bg-stars-accent/5 hover:text-stars-accent
+           transition-all duration-300;
+}
+
+.toc a:hover {
+    @apply no-underline;
+}
+
+/* 文章内容中的标题样式 */
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    @apply scroll-mt-24; /* 确保锚点跳转时标题不会被固定导航栏遮挡 */
+}
+
+/* 验证信息样式 */
+.content .verification-info {
+    @apply mt-12 p-6 
+           bg-stars-secondary/80 backdrop-blur-sm 
+           rounded-2xl border border-stars-accent/10;
+}
+
+.content .verification-info h3 {
+    @apply mt-0 mb-4 text-lg font-semibold text-stars-accent
+           border-b border-stars-accent/10 pb-3;
+}
+
+.content .verification-info ul {
+    @apply list-none p-0 m-0 space-y-3;
+}
+
+.content .verification-info li {
+    @apply flex items-center gap-3 text-sm text-stars-muted;
+}
+
+.content .verification-info strong {
+    @apply text-stars-accent font-medium min-w-[120px];
+}
+
+.content .verification-info a {
+    @apply text-stars-accent/80 hover:text-stars-accent
+           no-underline hover:underline
+           break-all transition-colors duration-300;
+}
+
+.content .verification-info code {
+    @apply bg-stars-primary/20 text-stars-accent
+           px-2 py-1 rounded font-mono text-sm;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .content .verification-info {
+        @apply p-4;
+    }
+    
+    .content .verification-info li {
+        @apply flex-col items-start gap-1;
+    }
+    
+    .content .verification-info strong {
+        @apply min-w-0;
+    }
+}

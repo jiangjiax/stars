@@ -1,0 +1,42 @@
+{{ define "components/toc" }}
+<div class="table-of-contents-wrapper">
+    <div class="text-lg font-bold text-stars-accent mb-4">目录</div>
+    <nav class="table-of-contents">
+        <ul>
+            {{ range . }}
+            <li>
+                <a href="#{{ .ID }}" 
+                   title="{{ .Title }}"
+                   class="toc-link toc-link-root"
+                   data-level="{{ .Level }}">
+                    {{ .Title }}
+                </a>
+                {{ if .Children }}
+                    <ul>
+                        {{ template "components/toc-items" .Children }}
+                    </ul>
+                {{ end }}
+            </li>
+            {{ end }}
+        </ul>
+    </nav>
+</div>
+{{ end }}
+
+{{ define "components/toc-items" }}
+    {{ range . }}
+    <li>
+        <a href="#{{ .ID }}" 
+           title="{{ .Title }}"
+           class="toc-link toc-link-child"
+           data-level="{{ .Level }}">
+            {{ .Title }}
+        </a>
+        {{ if .Children }}
+            <ul>
+                {{ template "components/toc-items" .Children }}
+            </ul>
+        {{ end }}
+    </li>
+    {{ end }}
+{{ end }} 

@@ -1,0 +1,80 @@
+{{ define "main" }}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-stars-accent mb-8">标签云</h1>
+    
+    <div class="flex flex-wrap gap-3 mb-8">
+        {{ range .AllTags }}
+        <a href="/tags/{{ urlize . }}" 
+           class="px-4 py-2 rounded-full bg-stars-primary/40 border border-stars-accent/20 
+                  hover:border-stars-accent/30 transition-all duration-300
+                  {{ if eq . $.CurrentTag }}border-stars-accent{{ end }}">
+            <span class="flex items-center gap-1.5">
+                {{ . }}
+                <span class="text-xs text-stars-muted">({{ index $.TagsStats . }})</span>
+            </span>
+        </a>
+        {{ end }}
+    </div>
+
+    <!-- 如果在标签详情页面，显示该标签下的文章 -->
+    {{ if .CurrentTag }}
+    <div class="mt-8">
+        <h2 class="text-xl md:text-2xl font-bold text-stars-accent mb-6">
+            标签：{{ .CurrentTag }}
+        </h2>
+        <!-- 文章列表 -->
+        <div id="posts-container" class="space-y-4">
+            {{ range .Posts }}
+            <article class="post-card">
+                <div class="post-card-container">
+                    <!-- 系列标识 -->
+                    {{ if .Series }}
+                    <div class="series-badge mb-3">
+                        <span>{{ .Series }}</span>
+                        {{ if .SeriesOrder }}
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-stars-accent/10">
+                            第 {{ .SeriesOrder }} 篇
+                        </span>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+
+                    <!-- 文章标题和描述 -->
+                    <h2 class="text-xl font-bold mb-2 hover:text-stars-accent transition-colors">
+                        <a href="/posts/{{ .Slug }}">{{ .Title }}</a>
+                    </h2>
+                    <p class="text-stars-muted mb-4">{{ .Description }}</p>
+
+                    <!-- 标签 -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {{ range .Tags }}
+                        <a href="/tags/{{ . }}" 
+                           class="px-2 py-1 text-xs rounded-full bg-stars-primary/40 
+                                  hover:bg-stars-accent/10 transition-colors">
+                            {{ . }}
+                        </a>
+                        {{ end }}
+                    </div>
+
+                    <!-- 元信息 -->
+                    <div class="flex items-center space-x-4 text-sm text-stars-muted">
+                        <time class="flex items-center gap-1">
+                            <i class="far fa-calendar-alt"></i>
+                            {{ .Date.Format "2006-01-02" }}
+                        </time>
+                        <span class="flex items-center gap-1">
+                            <i class="far fa-clock"></i>
+                            {{ .ReadingTime }} min
+                        </span>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+        
+        <!-- 分页 -->
+        {{ template "components/pagination" . }}
+    </div>
+    {{ end }}
+</div>
+{{ end }} 

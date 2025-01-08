@@ -24,7 +24,6 @@ var (
 		"trimPrefix": strings.TrimPrefix,
 		"jsonify":    jsonify,
 		"AssetPath":  getAssetPath,
-		"urlquery":   url.QueryEscape,
 		"hasPrefix":  strings.HasPrefix,
 		"hasSuffix":  strings.HasSuffix,
 		"contains":   strings.Contains,
@@ -111,7 +110,7 @@ var (
 
 // 字符串处理函数
 func urlize(s string) string {
-	s = strings.ToLower(s)
+	// 将空格替换为连字符
 	s = strings.ReplaceAll(s, " ", "-")
 	return s
 }

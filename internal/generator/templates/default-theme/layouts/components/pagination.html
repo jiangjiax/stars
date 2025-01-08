@@ -1,0 +1,50 @@
+{{ define "components/pagination" }}
+{{ if or .Pagination.HasPrev .Pagination.HasNext }}
+<nav class="pagination" role="navigation" aria-label="分页导航">
+    <div class="flex items-center gap-4">
+        <!-- 上一页 -->
+        {{ if .Pagination.HasPrev }}
+        {{ $suffix := "" }}
+        {{ if ne .Pagination.PrevPage 1 }}
+            {{ $suffix = printf "/page/%d" .Pagination.PrevPage }}
+        {{ else }}
+            {{ $suffix = "/" }}
+        {{ end }}
+        <a href="{{ .Pagination.BaseURL }}{{ $suffix }}"
+           class="pagination-btn prev-btn"
+           aria-label="前往上一页">
+            <i class="fas fa-chevron-left"></i>
+            <span>上一页</span>
+        </a>
+        {{ else }}
+        <span class="pagination-btn prev-btn disabled" aria-disabled="true">
+            <i class="fas fa-chevron-left"></i>
+            <span>上一页</span>
+        </span>
+        {{ end }}
+
+        <!-- 页码指示器 -->
+        <div class="pagination-info" role="status">
+            <span class="current">{{ .Pagination.CurrentPage }}</span>
+            <span class="divider">/</span>
+            <span class="total">{{ .Pagination.TotalPages }}</span>
+        </div>
+
+        <!-- 下一页 -->
+        {{ if .Pagination.HasNext }}
+        <a href="{{ .Pagination.BaseURL }}/page/{{ .Pagination.NextPage }}"
+           class="pagination-btn next-btn"
+           aria-label="前往下一页">
+            <span>下一页</span>
+            <i class="fas fa-chevron-right"></i>
+        </a>
+        {{ else }}
+        <span class="pagination-btn next-btn disabled" aria-disabled="true">
+            <span>下一页</span>
+            <i class="fas fa-chevron-right"></i>
+        </span>
+        {{ end }}
+    </div>
+</nav>
+{{ end }}
+{{ end }} 

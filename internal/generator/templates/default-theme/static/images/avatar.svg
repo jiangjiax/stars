@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+    
+    <pattern id="grid" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#00ff00" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+    
+    <pattern id="stars" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1" fill="#00ff00" opacity="0.6">
+        <animate
+          attributeName="opacity"
+          values="0.2;0.8;0.2"
+          dur="3s"
+          repeatCount="indefinite"
+        />
+      </circle>
+    </pattern>
+  </defs>
+  
+  <circle cx="50" cy="50" r="48" fill="url(#cyberGrad)" stroke="#00ff00" stroke-width="2"/>
+  
+  <circle cx="50" cy="50" r="48" fill="url(#grid)">
+    <animateTransform 
+      attributeName="transform" 
+      type="rotate"
+      from="0 50 50"
+      to="360 50 50"
+      dur="30s"
+      repeatCount="indefinite"
+    />
+  </circle>
+  
+  <circle cx="50" cy="50" r="48" fill="url(#stars)">
+    <animateTransform 
+      attributeName="transform" 
+      type="rotate"
+      from="360 50 50"
+      to="0 50 50"
+      dur="20s"
+      repeatCount="indefinite"
+    />
+  </circle>
+  
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#00ff00" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.5">
+    <animate 
+      attributeName="stroke-dashoffset"
+      from="0"
+      to="100"
+      dur="10s"
+      repeatCount="indefinite"
+    />
+  </circle>
+  
+  <circle cx="50" cy="50" r="5" fill="#00ff00" opacity="0.8">
+    <animate
+      attributeName="r"
+      values="3;5;3"
+      dur="2s"
+      repeatCount="indefinite"
+    />
+  </circle>
+
+  <g>
+    <circle cx="30" cy="30" r="1" fill="#00ff00">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="70" cy="40" r="1" fill="#00ff00">
+      <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="40" cy="60" r="1" fill="#00ff00">
+      <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="60" cy="70" r="1" fill="#00ff00">
+      <animate attributeName="opacity" values="0;1;0" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>

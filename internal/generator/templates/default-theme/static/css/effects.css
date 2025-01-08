@@ -1,0 +1,111 @@
+/* 星空背景 */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+/* 不同大小的星星 */
+.star.size-1 { 
+    width: 1px; 
+    height: 1px; 
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+.star.size-2 { 
+    width: 2px; 
+    height: 2px; 
+    background-color: rgba(255, 215, 0, 0.8);  /* 金色 */
+    box-shadow: 0 0 3px rgba(255, 215, 0, 0.5);
+}
+.star.size-3 { 
+    width: 3px; 
+    height: 3px; 
+    background-color: rgba(135, 206, 235, 0.8);  /* 天蓝色 */
+    box-shadow: 0 0 4px rgba(135, 206, 235, 0.5);
+}
+
+/* 闪烁动画 */
+@keyframes twinkle {
+    0% { 
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% { 
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+/* 流星效果 */
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    opacity: 0;
+    animation: shooting-star 1s linear;
+}
+
+@keyframes shooting-star {
+    0% {
+        transform: translateX(0) translateY(0) rotate(45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(1000px) translateY(1000px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* 模态框 */
+.modal {
+    @apply fixed inset-0 bg-stars-primary/80 backdrop-blur-md
+           flex items-center justify-center z-50;
+}
+
+.modal-content {
+    @apply bg-stars-secondary p-8 rounded-2xl shadow-2xl
+           max-w-md w-full mx-4 relative
+           border border-stars-accent/20;
+    animation: modal-appear 0.3s ease-out;
+}
+
+@keyframes modal-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 悬浮效果 */
+.hover-card {
+    @apply transition-all duration-300;
+}
+
+.hover-card:hover {
+    @apply transform -translate-y-1
+           shadow-lg shadow-stars-accent/20;
+} 
