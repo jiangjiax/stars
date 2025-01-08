@@ -6,20 +6,13 @@
 
 ### Ethereum Mainnet
 
-- **NFT Contract**
-  - 地址: `0x760410d585110e149233919357E7C866bb51A841`
-  - [合约代码](https://github.com/stars/contracts/blob/main/src/ContentRegistry.sol)
-  - [Etherscan](https://etherscan.io/address/0x760410d585110e149233919357E7C866bb51A841)
-  - 部署时间: 2024-03-20
-  - 当前版本: v1.0.0
-
 ## 测试网合约
 
-### Sepolia
+### Ethereum Sepolia
 
 - **NFT Contract**
-  - 地址: `0x...`
-  - [合约代码](https://github.com/stars/contracts/blob/main/src/ContentRegistry.sol)
-  - [Etherscan](https://sepolia.etherscan.io/address/0x...)
-  - 部署时间: 2024-03-20
+  - 地址: `0x760410d585110e149233919357E7C866bb51A841`
+  - [合约代码](https://github.com/jiangjiax/stars-contracts)
+  - [Etherscan](https://sepolia.etherscan.io/address/0x760410d585110e149233919357E7C866bb51A841)
+  - 部署时间: 2024-12
   - 当前版本: v1.0.0
