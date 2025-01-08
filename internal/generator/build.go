@@ -109,24 +109,29 @@ func (b *Builder) parsePosts() error {
 		}
 
 		// 解析文章
-		post, err := post.ParsePost(path)
+		parsePost, err := post.ParsePost(path)
 		if err != nil {
 			return fmt.Errorf("failed to parse post %s: %w", path, err)
 		}
 
+		// 添加与 server 命令相同的 contentHash 检查
+		if parsePost.Verification == nil || parsePost.ContentChanged() {
+			if err := parsePost.UpdateContentHash(); err != nil {
+				return fmt.Errorf("failed to update content hash: %w", err)
+			}
+		}
+
 		// 如果没有设置 slug，使用相对路径作为 URL
-		if post.Slug == "" {
+		if parsePost.Slug == "" {
 			relPath, err := filepath.Rel(postsDir, path)
 			if err != nil {
 				return fmt.Errorf("failed to get relative path: %w", err)
 			}
-			// 移除 .md 后缀
 			relPath = strings.TrimSuffix(relPath, ".md")
-			// 将路径分隔符转换为 URL 分隔符
-			post.Slug = strings.ReplaceAll(relPath, string(filepath.Separator), "/")
+			parsePost.Slug = strings.ReplaceAll(relPath, string(filepath.Separator), "/")
 		}
 
-		b.project.Posts = append(b.project.Posts, post)
+		b.project.Posts = append(b.project.Posts, parsePost)
 		return nil
 	})
 	if err != nil {
@@ -521,7 +526,7 @@ func (b *Builder) generatePaginatedTaxonomyPages(taxonomy, term string, posts []
 		}
 
 		// 处理文件夹名称：将空格替换为连字符，移除特殊字符
-		dirName := strings.ReplaceAll(term, " ", "+")
+		dirName := strings.ReplaceAll(term, " ", "-")
 
 		// 创建目录并写入文件
 		var pageDir string

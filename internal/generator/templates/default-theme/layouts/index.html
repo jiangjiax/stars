@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="container mx-auto px-4">
+    {{ template "profile" . }}
+
+    <!-- CTA 按钮 - 扁平化设计 -->
+    <div class="text-center mt-12 mb-12">
+        <a href="/posts" 
+           class="inline-flex items-center gap-2 px-8 py-3
+                  bg-transparent border border-stars-accent rounded-lg
+                  text-stars-accent font-medium
+                  hover:bg-stars-accent/5
+                  transition-all duration-300 ease-out">
+            <span>查看所有文章</span>
+            <i class="fas fa-arrow-right text-sm transition-transform group-hover:translate-x-1"></i>
+        </a>
+    </div>
+</div>
+{{ end }} 

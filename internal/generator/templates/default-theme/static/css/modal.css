@@ -1,0 +1,17 @@
+/* 模态框基础样式 */
+.modal {
+    @apply fixed inset-0 bg-stars-primary/80 backdrop-blur-md
+           flex items-center justify-center z-50;
+}
+
+.modal-content {
+    @apply bg-stars-secondary p-8 rounded-2xl shadow-2xl
+           max-w-md w-full mx-4 relative
+           border border-stars-accent/20;
+}
+
+/* 关闭按钮 */
+.modal-close {
+    @apply absolute top-4 right-4 text-2xl text-stars-muted
+           hover:text-stars-accent transition-colors duration-300;
+} 

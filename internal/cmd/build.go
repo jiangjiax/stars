@@ -6,9 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/spf13/cobra"
-	"github.com/jiangjiax/stars/internal/asset"
 	"github.com/jiangjiax/stars/internal/generator"
+	"github.com/spf13/cobra"
 )
 
 var buildCmd = &cobra.Command{
@@ -35,13 +34,6 @@ It processes all content, applies themes, and creates a deployable website.`,
 		gen, err := generator.New(projectDir, false)
 		if err != nil {
 			return fmt.Errorf("failed to create generator: %w", err)
-		}
-
-		// 构建资源文件(CSS/JS)
-		fmt.Println("Building assets...")
-		pipeline := asset.New(projectDir, gen.Site.Theme)
-		if err := pipeline.BuildAssets(); err != nil {
-			return fmt.Errorf("failed to build assets: %w", err)
 		}
 
 		// 生成静态网站

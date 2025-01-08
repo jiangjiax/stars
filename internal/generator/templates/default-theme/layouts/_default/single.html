@@ -1,0 +1,670 @@
+{{ define "main" }}
+<article class="container mx-auto px-4 pt-2 pb-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+        <!-- 左侧主要内容区域 -->
+        <div class="lg:col-span-9">
+            <!-- 文章头部信息 - 调整移动端间距 -->
+            <header class="relative mb-6 lg:mb-10 p-6 lg:p-8 bg-stars-secondary/80 backdrop-blur-sm rounded-2xl border border-stars-accent/10
+                         before:absolute before:inset-0 before:bg-gradient-to-br before:from-stars-accent/5 before:to-transparent before:rounded-2xl">
+                <!-- 系列信息 -->
+                {{ if .Post.Series }}
+                <div class="relative mb-8">
+                    <a href="#series-nav" 
+                       class="inline-flex items-center gap-3 px-4 py-2 rounded-xl
+                             bg-stars-primary/30 backdrop-blur-sm
+                             border border-stars-accent/20 text-stars-accent
+                             hover:bg-stars-accent/10 hover:scale-[1.02] 
+                             transition-all duration-300 group">
+                        <div class="flex items-center gap-2">
+                            <span class="font-mono">{{ .Post.Series }}</span>
+                        </div>
+                        <span class="px-2 py-0.5 text-sm rounded-full bg-stars-accent/10 group-hover:bg-stars-accent/20">
+                            Part {{ .Post.SeriesOrder }}
+                        </span>
+                        <i class="fas fa-chevron-down text-xs opacity-70 group-hover:translate-y-0.5 transition-transform"></i>
+                    </a>
+                </div>
+                {{ end }}
+
+                <!-- 调整移动端标题大小 -->
+                <h1 class="relative text-3xl sm:text-4xl lg:text-5xl font-bold text-stars-accent mb-4 lg:mb-6
+                           leading-tight tracking-tight font-display">
+                    {{ .Post.Title }}
+                </h1>
+
+                <!-- 调整移动端描述文字大小 -->
+                {{ if .Post.Description }}
+                <p class="relative text-base lg:text-lg text-stars-muted mb-6 lg:mb-8 leading-relaxed max-w-3xl">
+                    {{ .Post.Description }}
+                </p>
+                {{ end }}
+
+                <!-- 优化移动端元信息布局 -->
+                <div class="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+                    <!-- 文章元信息 -->
+                    <div class="flex items-center gap-6 text-sm text-stars-muted">
+                        <time class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-stars-primary/20">
+                            <i class="far fa-calendar-alt"></i>
+                            {{ .Post.Date.Format "2006-01-02" }}
+                        </time>
+                        <span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-stars-primary/20">
+                            <i class="far fa-clock"></i>
+                            {{ .Post.ReadingTime }} min read
+                        </span>
+                    </div>
+
+                    <!-- 标签 -->
+                    <div class="flex flex-wrap gap-2">
+                        {{ range .Post.Tags }}
+                        <span class="px-3 py-1.5 text-sm rounded-lg
+                                   bg-stars-primary/20 text-stars-muted
+                                   border border-stars-accent/10
+                                   hover:bg-stars-accent/5 hover:text-stars-accent
+                                   transition-colors duration-300 cursor-default">
+                            <i class="fas fa-tag text-xs mr-2 opacity-70"></i>
+                            {{ . }}
+                        </span>
+                        {{ end }}
+                    </div>
+                </div>
+            </header>
+
+            <!-- 文章内容区域 -->
+            <div class="relative group space-y-8 lg:space-y-12">
+                <!-- 文章内容卡片 -->
+                <div class="bg-stars-secondary/80 backdrop-blur-sm rounded-2xl border border-stars-accent/10 overflow-hidden">
+                    <!-- 如果有验证信息,显示顶部操作栏 -->
+                    {{ if .Post.Verification.ArweaveId }}
+                    <div class="flex items-center justify-between gap-4 p-4 lg:p-6 border-b border-stars-accent/10
+                                bg-gradient-to-r from-stars-accent/5 to-transparent">
+                        <div class="flex items-center gap-3 text-stars-accent">
+                            <i class="fas fa-shield-check"></i>
+                            <span class="text-sm">此文章已上链验证</span>
+                        </div>
+                        <button onclick="scrollToVerification()" 
+                                class="px-4 py-2 rounded-lg bg-stars-accent/10 text-stars-accent 
+                                       hover:bg-stars-accent/20 transition-all duration-300">
+                            <span class="flex items-center gap-2">
+                                <span>查看 NFT 信息</span>
+                            </span>
+                        </button>
+                    </div>
+                    {{ end }}
+
+                    <!-- 文章内容 -->
+                    <div class="content p-5 sm:p-6 lg:p-8 prose prose-stars max-w-none">
+                        {{ .Post.Content }}
+                    </div>
+
+                    <!-- 底部操作栏 -->
+                    <div class="flex items-center justify-between gap-4 p-4 lg:p-6 border-t border-stars-accent/10
+                                bg-gradient-to-br from-transparent to-stars-accent/5">
+                        <!-- 分享按钮 -->
+                        <button onclick="share()" 
+                                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                                       bg-stars-primary/30 backdrop-blur-sm
+                                       border border-stars-accent/20 
+                                       text-stars-accent hover:bg-stars-accent/10
+                                       hover:scale-[1.02] active:scale-[0.98]
+                                       transition-all duration-300">
+                            <i class="fas fa-share-alt"></i>
+                            <span>分享文章</span>
+                        </button>
+
+                        <!-- 如果有验证信息,显示查看验证按钮 -->
+                        {{ if .Post.Verification }}
+                        <button onclick="copyHash('{{ .Post.Verification.ContentHash }}')"
+                                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                                       bg-stars-primary/30 backdrop-blur-sm
+                                       border border-stars-accent/20 
+                                       text-stars-accent hover:bg-stars-accent/10
+                                       hover:scale-[1.02] active:scale-[0.98]
+                                       transition-all duration-300
+                                       group">
+                            <i class="fas fa-fingerprint text-stars-accent/70 group-hover:text-stars-accent"></i>
+                            <code class="font-mono text-sm truncate max-w-[150px]">{{ .Post.Verification.ContentHash }}</code>
+                        </button>
+                        {{ end }}
+                    </div>
+                </div>
+
+                <!-- 文章底部订阅组件 -->
+                {{ template "components/newsletter" . }}
+                
+                <!-- 验证信息卡片 -->
+                {{ if .Post.Verification.ArweaveId }}
+                <div id="verification" class="bg-stars-secondary/80 backdrop-blur-sm rounded-2xl border border-stars-accent/10 overflow-hidden">
+                    <!-- 验证信息头部 -->
+                    <div class="p-6 lg:p-8 border-b border-stars-accent/10 bg-gradient-to-br from-stars-accent/5 to-transparent">
+                        <div class="flex items-center gap-3 text-stars-accent mb-2">
+                            <h3 class="text-xl font-bold">链上验证</h3>
+                        </div>
+                        <p class="text-stars-muted text-sm leading-relaxed">
+                            此文章已被永久存储在区块链上，并由其创作者进行了签名验证。您可以查看相关证明，也可以将其铸造为 NFT 收藏。
+                        </p>
+                    </div>
+
+                    <!-- 验证详情 -->
+                    <div class="p-6 lg:p-8">
+                        <!-- 验证信息列表 -->
+                        <div class="grid gap-4 sm:grid-cols-2 mb-8">
+                            <!-- 基本验证信息 -->
+                            {{ if .Post.Verification.Author }}
+                            <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                <div class="text-stars-muted text-sm mb-2">创作者地址</div>
+                                <code class="text-stars-accent break-all text-sm">{{ .Post.Verification.Author }}</code>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Post.Verification.ArweaveId }}
+                            <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                <div class="text-stars-muted text-sm mb-2">Arweave 交易</div>
+                                <code class="text-stars-accent break-all text-sm">{{ .Post.Verification.ArweaveId }}</code>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Post.Verification.NftContract }}
+                            <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                <div class="text-stars-muted text-sm mb-2">NFT 合约</div>
+                                <code class="text-stars-accent break-all text-sm">{{ .Post.Verification.NftContract }}</code>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Post.Verification.ContentHash }}
+                            <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                <div class="text-stars-muted text-sm mb-2">内容哈希</div>
+                                <code class="text-stars-accent break-all text-sm">{{ .Post.Verification.ContentHash }}</code>
+                            </div>
+                            {{ end }}
+                        </div>
+
+                        <!-- NFT 信息 -->
+                        <div class="mb-8">
+                            <h4 class="text-lg font-bold text-stars-accent mb-4">NFT 详情</h4>
+                            <div class="grid gap-4 sm:grid-cols-3">
+                                {{ if .Post.Verification.NFT.Price }}
+                                <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                    <div class="text-stars-muted text-sm mb-1">铸造价格</div>
+                                    <div class="text-stars-accent font-mono">{{ .Post.Verification.NFT.Price }} ETH</div>
+                                </div>
+                                {{ end }}
+
+                                {{ if .Post.Verification.NFT.MaxSupply }}
+                                <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                    <div class="text-stars-muted text-sm mb-1">最大供应量</div>
+                                    <div class="text-stars-accent font-mono">{{ .Post.Verification.NFT.MaxSupply }}</div>
+                                </div>
+                                {{ end }}
+
+                                {{ if .Post.Verification.NFT.RoyaltyFee }}
+                                <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                    <div class="text-stars-muted text-sm mb-1">版税比例</div>
+                                    <div class="text-stars-accent font-mono">{{ div .Post.Verification.NFT.RoyaltyFee 100 }}%</div>
+                                </div>
+                                {{ end }}
+
+                                {{ if .Post.Verification.NFT.ChainId }}
+                                <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                    <div class="text-stars-muted text-sm mb-1">链</div>
+                                    <div class="text-stars-accent font-mono">{{ .Post.Verification.NFT.ChainId }}</div>
+                                </div>
+                                {{ end }}
+
+                                {{ if .Post.Verification.NFT.Version }}
+                                <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                    <div class="text-stars-muted text-sm mb-1">合约版本</div>
+                                    <div class="text-stars-accent font-mono">v{{ .Post.Verification.NFT.Version }}</div>
+                                </div>
+                                {{ end }}
+
+                                {{ if .Post.Verification.NFT.OnePerAddress }}
+                                <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
+                                    <div class="text-stars-muted text-sm mb-1">每地址限制</div>
+                                    <div class="text-stars-accent font-mono">1 枚</div>
+                                </div>
+                                {{ end }}
+                            </div>
+                        </div>
+
+                        <!-- Mint NFT 按钮 -->
+                        <div class="flex justify-center">
+                            <button id="mintButton2" onclick="mintNFT()" 
+                                    class="px-6 py-3 rounded-xl bg-stars-accent/10 text-stars-accent 
+                                           hover:bg-stars-accent/20 transition-all duration-300">
+                                <span class="flex items-center gap-2">
+                                    <i class="fas fa-cube"></i>
+                                    <span id="mintButtonText2">铸造 NFT</span>
+                                </span>
+                                <span id="mintSpinner2" class="hidden">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+
+                <!-- 系列导航 -->
+                {{ if .Post.Series }}
+                <div class="mb-8">
+                    <div class="bg-stars-secondary/80 backdrop-blur-sm rounded-2xl border border-stars-accent/10 p-4 sm:p-6" id="series-nav">
+                        <!-- 移动端布局 -->
+                        <div class="sm:hidden">
+                            <h3 class="text-lg font-bold mb-3">{{ .Post.Series }}</h3>
+                            <div class="text-stars-muted text-sm mb-4">
+                                您正在阅读 <span class="text-stars-accent">{{ .Post.Series }}</span> 系列的第 {{ .Post.SeriesOrder }} 篇文章
+                            </div>
+                            <a href="/series/{{ urlize .Post.Series }}" 
+                               class="block w-full text-center px-4 py-2.5 rounded-xl bg-stars-primary/20 border border-stars-accent/20 
+                                      hover:border-stars-accent/30 hover:bg-stars-accent/5 
+                                      transition-all duration-300">
+                                <span class="flex items-center justify-center gap-2">
+                                    <span class="text-sm">查看系列全部文章</span>
+                                    <i class="fas fa-arrow-right text-stars-accent/80"></i>
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- 桌面端布局 -->
+                        <div class="hidden sm:block">
+                            <div class="flex items-center justify-between gap-4 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <h3 class="text-lg font-bold">{{ .Post.Series }}</h3>
+                                </div>
+                                <a href="/series/{{ urlize .Post.Series }}" 
+                                   class="px-4 py-2 rounded-xl bg-stars-primary/20 border border-stars-accent/20 
+                                          hover:border-stars-accent/30 hover:bg-stars-accent/5 
+                                          transition-all duration-300">
+                                    <span class="flex items-center gap-2">
+                                        <span class="text-sm">查看系列全部文章</span>
+                                        <i class="fas fa-arrow-right text-stars-accent/80"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="text-stars-muted">
+                                您正在阅读 <span class="text-stars-accent">{{ .Post.Series }}</span> 系列的第 {{ .Post.SeriesOrder }} 篇文章
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <!-- 右侧目录 -->
+        {{ if .Post.TableOfContents }}
+        <div class="hidden lg:block lg:col-span-3">
+            <div class="sticky top-24 pt-[5.5rem]">
+                {{ template "components/toc" .Post.TableOfContents }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+
+    <!-- 回顶部按钮 -->
+    <button id="backToTop" 
+            onclick="scrollToTop()"
+            class="fixed bottom-8 right-8 p-3 rounded-xl
+                   bg-stars-secondary/80 backdrop-blur-sm
+                   border border-stars-accent/20 text-stars-accent
+                   hover:bg-stars-accent/10 hover:scale-110
+                   active:scale-95
+                   transition-all duration-300
+                   opacity-0 invisible
+                   lg:bottom-12 lg:right-12
+                   shadow-lg shadow-stars-accent/5">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- 分享模态框 -->
+    <div id="shareModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                    w-full max-w-md p-6 
+                    bg-stars-secondary/90 backdrop-blur-sm 
+                    rounded-xl border border-stars-accent/20">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-2xl font-bold text-stars-accent">分享文章</h3>
+                <button onclick="closeModal('shareModal')" 
+                        class="w-8 h-8 flex items-center justify-center rounded-xl
+                               hover:bg-stars-primary/30 text-stars-muted hover:text-stars-accent 
+                               transition-all">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <button onclick="shareToTwitter()" 
+                        class="flex flex-col items-center gap-2 p-4 rounded-xl
+                               bg-stars-primary/30 hover:bg-stars-accent/20 
+                               text-stars-accent transition-all duration-300
+                               group">
+                    <i class="fab fa-twitter text-2xl group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm">Twitter</span>
+                </button>
+                <button onclick="shareToTelegram()" 
+                        class="flex flex-col items-center gap-2 p-4 rounded-xl
+                               bg-stars-primary/30 hover:bg-stars-accent/20 
+                               text-stars-accent transition-all duration-300
+                               group">
+                    <i class="fab fa-telegram text-2xl group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm">Telegram</span>
+                </button>
+                <button onclick="shareToReddit()" 
+                        class="flex flex-col items-center gap-2 p-4 rounded-xl
+                               bg-stars-primary/30 hover:bg-stars-accent/20 
+                               text-stars-accent transition-all duration-300
+                               group">
+                    <i class="fab fa-reddit text-2xl group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm">Reddit</span>
+                </button>
+            </div>
+            <button onclick="copyLink()" 
+                    class="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+                           bg-stars-primary/30 hover:bg-stars-accent/20 
+                           text-stars-accent transition-all duration-300
+                           group">
+                <i class="fas fa-link text-lg group-hover:scale-110 transition-transform"></i>
+                <span>复制链接</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toast" 
+         class="fixed bottom-8 left-1/2 -translate-x-1/2 
+                py-3 px-6 rounded-xl
+                backdrop-blur-sm
+                border border-stars-accent/20
+                shadow-lg
+                transform transition-all duration-300 scale-0 opacity-0
+                flex items-center gap-3
+                bg-stars-accent/10 text-stars-accent">
+        <span id="toastIcon">
+            <i class="fas fa-check-circle text-lg"></i>
+        </span>
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- 分享功能的 JavaScript -->
+    <script>
+    function share() {
+        const modal = document.getElementById('shareModal');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function shareToTwitter() {
+        const text = encodeURIComponent(`${document.title}`);
+        const url = encodeURIComponent(window.location.href);
+        window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+
+    function shareToTelegram() {
+        const text = encodeURIComponent(document.title);
+        const url = encodeURIComponent(window.location.href);
+        window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+    }
+
+    function shareToReddit() {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        window.open(`https://reddit.com/submit?url=${url}&title=${title}`, '_blank');
+    }
+
+    function copyLink() {
+        const tempInput = document.createElement('input');
+        tempInput.value = window.location.href;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        
+        try {
+            document.execCommand('copy');
+            window.showToast('链接已复制到剪贴板 ✨');
+            closeModal('shareModal');
+        } catch (err) {
+            window.showToast('复制失败，请手动复制链接');
+        } finally {
+            document.body.removeChild(tempInput);
+        }
+    }
+
+    // 点击模态框背景关闭
+    document.getElementById('shareModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            e.target.classList.add('opacity-0', 'pointer-events-none');
+        }
+    });
+    </script>
+
+    <!-- 修改目录相关的 JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const headings = document.querySelectorAll('.content h1, .content h2, .content h3, .content h4, .content h5, .content h6');
+        let isScrolling = false;  // 添加标志来防止复触发
+        
+        // 点击目录项时平滑滚动到对应位置
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                isScrolling = true;  // 设置动标志
+                
+                const href = link.getAttribute('href');
+                const targetId = href.substring(1);
+                const target = document.getElementById(targetId);
+                
+                if (target) {
+                    // 移除所有活动状态
+                    tocLinks.forEach(l => l.classList.remove('active'));
+                    // 添加当前项的活动状态
+                    link.classList.add('active');
+                    
+                    const offset = target.offsetTop - 100;
+                    window.scrollTo({
+                        top: offset,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 更新 URL
+                    history.pushState(null, '', href);
+                    
+                    // 滚动完成后重置标志
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 100);
+                }
+            });
+        });
+
+        // 优化 IntersectionObserver 配置
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -80% 0px',
+            threshold: [0, 1]  // 观察进入和完全可见两个状态
+        };
+
+        const headingObserver = new IntersectionObserver((entries) => {
+            if (isScrolling) return;  // 如果是手动滚动，不处理
+
+            // 找到最靠近视口顶部的可见标题
+            const visibleEntries = entries.filter(entry => entry.isIntersecting);
+            if (visibleEntries.length === 0) return;
+
+            // 根据 Y 坐标排序选择最靠近顶部的标题
+            const topEntry = visibleEntries.reduce((prev, curr) => {
+                const prevY = Math.abs(prev.boundingClientRect.y);
+                const currY = Math.abs(curr.boundingClientRect.y);
+                return prevY < currY ? prev : curr;
+            });
+
+            const id = topEntry.target.id;
+            
+            // 更新目录高亮状态
+            tocLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === `#${id}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        // 为所有标题添加观察器
+        headings.forEach(heading => {
+            if (heading.id) {
+                headingObserver.observe(heading);
+            }
+        });
+
+        // 处理页面加载时的锚点转
+        if (window.location.hash) {
+            const targetId = window.location.hash.slice(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+                setTimeout(() => {
+                    const offset = target.offsetTop - 100;
+                    window.scrollTo({
+                        top: offset,
+                        behavior: 'smooth'
+                    });
+                    
+                    console.log(targetId);
+                    // 更新目录高亮状态
+                    const activeLink = document.querySelector(`.toc-link[href="#${targetId}"]`);
+                    if (activeLink) {
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        activeLink.classList.add('active');
+                    }
+                }, 100);
+            }
+        }
+    });
+    </script>
+
+    <!-- 添加回到顶部按钮的 JavaScript -->
+    <script>
+    // 控制回到顶部按钮的显示和隐藏
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTopButton.classList.remove('opacity-0', 'invisible');
+            backToTopButton.classList.add('opacity-100', 'visible');
+        } else {
+            backToTopButton.classList.add('opacity-0', 'invisible');
+            backToTopButton.classList.remove('opacity-100', 'visible');
+        }
+    });
+
+    // 平滑滚动到顶部
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // 系列信息点击平滑滚动
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const seriesLink = document.querySelector('a[href="#series-nav"]');
+    //     if (seriesLink) {
+    //         seriesLink.addEventListener('click', function(e) {
+    //             e.preventDefault();
+    //             const target = document.getElementById('series-nav');
+    //             if (target) {
+    //                 const offset = target.offsetTop - 100;
+    //                 window.scrollTo({
+    //                     top: offset,
+    //                     behavior: 'smooth'
+    //                 });
+    //             }
+    //         });
+    //     }
+    // });
+
+    // 移动端优化：点击时添加触觉反馈（如果设备支持）
+    if ('vibrate' in navigator) {
+        const buttons = document.querySelectorAll('button, a');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                navigator.vibrate(10);
+            });
+        });
+    }
+    </script>
+
+    <!-- 移动端目录按钮 -->
+    <div class="lg:hidden fixed bottom-8 left-8 z-50" id="tocButton">
+        <button onclick="toggleToc()"
+                class="p-3 rounded-xl bg-stars-secondary/80 backdrop-blur-sm
+                       border border-stars-accent/20 text-stars-accent
+                       hover:bg-stars-accent/10 transition-all duration-300
+                       shadow-lg shadow-stars-accent/5">
+            <i class="fas fa-list-ul"></i>
+        </button>
+    </div>
+
+    <!-- 移动端目录抽屉 -->
+    <div id="tocDrawer" 
+         class="lg:hidden fixed inset-0 z-40 transform transition-transform duration-300 translate-x-full">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleToc()"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-3/4 max-w-sm bg-stars-secondary/95 backdrop-blur-sm
+                    border-l border-stars-accent/20 overflow-y-auto
+                    pt-20">
+            <div>
+                {{ template "components/toc" .Post.TableOfContents }}
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加 JavaScript -->
+    <script>
+    function toggleToc() {
+        const drawer = document.getElementById('tocDrawer');
+        if (drawer.classList.contains('translate-x-full')) {
+            drawer.classList.remove('translate-x-full');
+        } else {
+            drawer.classList.add('translate-x-full');
+        }
+    }
+    </script>
+    
+    <!-- 存储文章信息 -->
+    <div id="articleData" 
+         data-verification="{{ .Post.Verification | jsonify }}"
+         data-title="{{ .Post.Title }}"
+         style="display: none;">
+    </div>
+
+    <!-- 滚动到验证信息区域 -->
+    <script>
+    function scrollToVerification() {
+        const verificationSection = document.getElementById('verification');
+        if (verificationSection) {
+            const offset = verificationSection.offsetTop; // 100px 的顶部间距
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth'
+            });
+        }
+    }
+    </script>
+
+    <!-- 添加复制哈希值的 JavaScript -->
+    <script>
+    function copyHash(hash) {
+        // 复制到剪贴板
+        navigator.clipboard.writeText(hash).then(() => {
+            // 显示成功提示
+            window.showToast('文章内容哈希已复制 ✨');
+        }).catch(() => {
+            window.showToast('复制失败，请手动复制');
+        });
+    }
+    </script>
+</article>
+{{ end }} 

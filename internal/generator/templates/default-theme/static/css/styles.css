@@ -1,0 +1,19 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* 导入其他CSS文件 - 使用相对路径 */
+@import "./theme.css" layer(components);
+@import "./components.css" layer(components);
+@import "./content.css" layer(components);
+@import "./effects.css" layer(components);
+
+/* 自定义颜色变量 */
+:root {
+    --stars-primary: #0a192f;
+    --stars-secondary: #112240;
+    --stars-accent: #64ffda;
+    --stars-gold: #ffd700;
+    --stars-text: #ccd6f6;
+    --stars-muted: #8892b0;
+}

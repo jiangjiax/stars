@@ -10,7 +10,7 @@ tags:
   - 内容创作
 title: Stars Markdown 语法
 verification:
-    arweaveId: 
+    arweaveId: Zj2oZ9_8utbLp_7Qrif4TrxQz_X0cBdIDaHWe7_3av4
     nftContract: 0x760410d585110e149233919357E7C866bb51A841
     author: 0x16572b97410200e79AB6c9423F8d9778F0Fb9C54
     contentHash: 

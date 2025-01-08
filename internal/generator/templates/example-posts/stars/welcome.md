@@ -9,7 +9,7 @@ tags:
   - 教程
 title: Stars 入门
 verification:
-    arweaveId: xyz789abc123def456
+    arweaveId: q98K4NSlJy2pEMx9bFMxXYBcStUVEjfKIHnviQkpHjE
     nftContract: 0x760410d585110e149233919357E7C866bb51A841
     author: 0x16572b97410200e79AB6c9423F8d9778F0Fb9C54
     contentHash: 

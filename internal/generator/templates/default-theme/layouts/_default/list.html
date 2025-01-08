@@ -1,0 +1,195 @@
+{{ define "main" }}
+<div class="container mx-auto px-4 py-8">
+    <!-- 根据当前是系列还是标签显示不同的筛选器 -->
+    {{ if or (not $.Taxonomy) (eq $.Taxonomy "series") }}
+    <!-- 系列筛选器 -->
+    <div class="mb-10 p-6 md:p-8 rounded-2xl bg-stars-secondary/30 backdrop-blur-sm border border-stars-accent/10">
+        <h3 class="text-xl md:text-2xl font-bold text-stars-accent mb-6 flex items-center gap-3">
+            <i class="fas fa-layer-group"></i>
+            文章系列
+        </h3>
+
+        <!-- 移动端当前选中项展示 -->
+        <div class="block md:hidden mb-4">
+            <div class="text-sm text-stars-muted mb-2">当前选择:</div>
+            <div class="series-item active">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-check text-xs"></i>
+                    <span class="font-medium">
+                        {{ if $.Taxonomy }}{{ $.Term }}{{ else }}全部文章{{ end }}
+                    </span>
+                </div>
+                {{ if $.Taxonomy }}
+                    {{ range .Site.Series }}
+                        {{ if eq (urlize $.Term) (urlize .Name) }}
+                            {{ if .Description }}
+                            <p class="series-desc mt-1.5 text-sm text-stars-muted/80">{{ .Description }}</p>
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="overflow-x-auto -mx-2 px-2 md:mx-0 md:px-0">
+            <div class="flex flex-nowrap md:flex-wrap gap-3 min-w-min">
+                <!-- 全部选项 - 特殊处理 -->
+                <a href="/posts" 
+                   class="series-item group {{ if not $.Taxonomy }}active{{ end }}">
+                    <div class="flex items-center gap-2">
+                        <i class="{{ if not $.Taxonomy }}fas fa-check{{ else }}far fa-circle{{ end }} text-xs"></i>
+                        <span class="font-medium">全部文章</span>
+                    </div>
+                    <p class="series-desc mt-1.5 text-sm text-stars-muted/80">
+                        浏览所有文章
+                    </p>
+                </a>
+
+                <!-- 系列列表 -->
+                {{ range .Site.Series }}
+                <a href="/series/{{ urlize .Name }}" 
+                   class="series-item group {{ if and (eq $.Taxonomy "series") (eq (urlize $.Term) (urlize .Name)) }}active{{ end }}">
+                    <div class="flex items-center gap-2">
+                        <i class="{{ if and (eq $.Taxonomy "series") (eq (urlize $.Term) (urlize .Name)) }}fas fa-check{{ else }}far fa-circle{{ end }} text-xs"></i>
+                        <span class="font-medium">{{ .Name }}</span>
+                        <span class="series-count">{{ index $.SeriesStats .Name }}</span>
+                    </div>
+                    {{ if .Description }}
+                    <p class="series-desc mt-1.5 text-sm text-stars-muted/80">{{ .Description }}</p>
+                    {{ end }}
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    {{ else if eq $.Taxonomy "tags" }}
+    <!-- 标签信息展示 -->
+    <div class="mb-10 p-6 md:p-8 rounded-2xl bg-stars-secondary/30 backdrop-blur-sm border border-stars-accent/10">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-xl md:text-2xl font-bold text-stars-accent mb-2 flex items-center gap-3">
+                    <i class="fas fa-tag"></i>
+                    标签：{{ $.Term }}
+                </h3>
+                <p class="text-sm text-stars-muted">共 {{ index $.TagsStats $.Term }} 篇文章</p>
+            </div>
+            <a href="/tags" class="px-4 py-2 rounded-xl bg-stars-primary/20 border border-stars-accent/20 
+                                 hover:border-stars-accent/30 hover:bg-stars-accent/5 transition-all duration-300">
+                <span class="flex items-center gap-2">
+                    <i class="fas fa-tags text-stars-accent/80"></i>
+                    <span class="text-sm">查看所有标签</span>
+                </span>
+            </a>
+        </div>
+    </div>
+    {{ end }}
+
+    <div class="flex-1 flex flex-col">
+        <!-- 文章列表 -->
+        <div id="posts-container" class="space-y-6 flex-grow relative">
+            {{ if not .Posts }}
+            <!-- 修改空状态容器的高度设置 -->
+            <div class="flex items-center justify-center" style="min-height: calc(100vh - 400px);">
+                <div class="flex flex-col items-center justify-center text-center px-4">
+                    <h3 class="text-xl text-stars-muted mb-2">暂无文章</h3>
+                    {{ if .Term }}
+                    <p class="text-stars-muted/70">该系列下还没有发布任何文章</p>
+                    {{ else }}
+                    <p class="text-stars-muted/70">该标签下还没有发布任何文章</p>
+                    {{ end }}
+                </div>
+            </div>
+            {{ else }}
+            {{ range .Posts }}
+            <article class="post-card group">
+                <div class="post-card-inner">
+                    <!-- 系列标识 -->
+                    {{ if .Series }}
+                    <div class="series-badge">
+                        <a href="/series/{{ urlize .Series }}">
+                            <span class="series-badge-text">{{ .Series }}</span>
+                            {{ if .SeriesOrder }}
+                            <span class="series-badge-number">Part {{ .SeriesOrder }}</span>
+                            {{ end }}
+                        </a>
+                    </div>
+                    {{ end }}
+
+                    <!-- 文章标题和描述 -->
+                    <h2 class="post-title">
+                        <a href="/posts/{{ .Slug }}">{{ .Title }}</a>
+                    </h2>
+                    <p class="post-description">{{ .Description }}</p>
+
+                    <div class="flex flex-wrap items-center gap-6">
+                        <!-- 标签 -->
+                        <div class="flex flex-wrap gap-2">
+                            {{ range .Tags }}
+                            <a href="/tags/{{ . }}" class="post-tag">
+                                <i class="fas fa-tag text-xs text-stars-muted"></i>
+                                {{ . }}
+                            </a>
+                            {{ end }}
+                        </div>
+
+                        <!-- 元信息 -->
+                        <div class="post-meta ml-auto">
+                            <time class="post-meta-item">
+                                <i class="far fa-calendar-alt"></i>
+                                {{ .Date.Format "2006-01-02" }}
+                            </time>
+                            <span class="post-meta-item">
+                                <i class="far fa-clock"></i>
+                                {{ .ReadingTime }} min read
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+            {{ end }}
+        </div>
+
+        <!-- 订阅组件 -->
+        {{ template "components/newsletter" . }}
+
+        <!-- 分页 -->
+        {{ template "components/pagination" . }}
+    </div>
+</div>
+
+<script>
+function filterPosts(type, value) {
+    let url = '/posts';
+    if (value) {
+        if (type === 'series') {
+            url = `/series/${encodeURIComponent(value)}`;
+        }
+    }
+
+    // 切换分类时，让当前页面的章卡片淡出
+    const posts = document.querySelectorAll('.post-card');
+    posts.forEach(post => {
+        post.style.opacity = '0';
+        post.style.transform = 'translateY(20px)';
+    });
+
+    // 等待淡出动画完成后跳转
+    setTimeout(() => {
+        window.location.href = url;
+    }, 300);
+}
+
+// 初始化
+// 在 list.html 中更新初始化代码
+document.addEventListener('DOMContentLoaded', () => {
+    const posts = document.querySelectorAll('.post-card');
+    posts.forEach((post, index) => {
+        requestAnimationFrame(() => {
+            post.style.opacity = '1';
+            post.style.transform = 'translateY(0)';
+        });
+    });
+});
+</script>
+{{ end }} 
