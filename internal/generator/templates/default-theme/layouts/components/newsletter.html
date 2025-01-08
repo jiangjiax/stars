@@ -1,0 +1,35 @@
+{{ define "components/newsletter" }}
+{{ if .Site.Newsletter.Enabled }}
+<div class="newsletter-container bg-stars-secondary/80 backdrop-blur-sm rounded-2xl 
+            border border-stars-accent/10 p-6 my-8">
+    <h3 class="text-xl font-bold text-stars-accent mb-3">订阅更新</h3>
+    <p class="text-stars-muted mb-4">{{ .Site.Newsletter.Description }}</p>
+    
+    <!-- Buttondown 订阅表单 -->
+    <form
+        action="https://buttondown.email/api/emails/embed-subscribe/{{ .Site.Newsletter.Buttondown.Username }}"
+        method="post"
+        target="popupwindow"
+        class="flex gap-2"
+        onsubmit="window.open('https://buttondown.email/{{ .Site.Newsletter.Buttondown.Username }}', 'popupwindow')"
+    >
+        <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            class="flex-1 px-4 py-2 rounded-xl bg-stars-primary/30 
+                   border border-stars-accent/20 text-stars-accent
+                   focus:border-stars-accent focus:outline-none"
+            required
+        >
+        <button 
+            type="submit"
+            class="px-6 py-2 rounded-xl bg-stars-accent/10 text-stars-accent
+                   hover:bg-stars-accent/20 transition-all duration-300"
+        >
+            订阅
+        </button>
+    </form>
+</div>
+{{ end }}
+{{ end }} 

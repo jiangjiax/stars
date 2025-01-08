@@ -13,14 +13,13 @@ import (
 	stdtmpl "text/template"
 	"time"
 
-	"github.com/go-git/go-git/v5"
 	"github.com/jiangjiax/stars/internal/config"
 	"github.com/jiangjiax/stars/internal/post"
 	"github.com/jiangjiax/stars/internal/template"
 	"github.com/jiangjiax/stars/internal/template/funcs"
 )
 
-//go:embed templates/config.yaml templates/example-posts/*
+//go:embed templates/config.yaml templates/example-posts/* templates/default-theme/* templates/default-theme/**/*
 var templates embed.FS
 
 // Project represents a new Stars blog project
@@ -125,35 +124,74 @@ func (p *Project) Generate() error {
 		return fmt.Errorf("failed to generate config: %w", err)
 	}
 
+	// 生成 vercel.json
+	vercelConfig := `{
+		"version": 2,
+		"buildCommand": null,
+		"devCommand": null,
+		"installCommand": null,
+		"framework": null,
+		"public": true
+	}`
+	
+	vercelPath := filepath.Join(p.Path, "vercel.json")
+	if err := os.WriteFile(vercelPath, []byte(vercelConfig), 0644); err != nil {
+		return fmt.Errorf("failed to generate vercel.json: %w", err)
+	}
+
 	// 标记生成成功
 	success = true
 	return nil
 }
 
-// 复制示例文章
+// copyExamplePosts copies example posts to the project
 func (p *Project) copyExamplePosts() error {
-	entries, err := templates.ReadDir("templates/example-posts")
-	if err != nil {
-		return fmt.Errorf("failed to read example posts directory: %w", err)
+	// 创建 posts 目录
+	postsDir := filepath.Join(p.Path, "content", "posts")
+	if err := os.MkdirAll(postsDir, 0755); err != nil {
+		return fmt.Errorf("failed to create posts directory: %w", err)
 	}
 
-	for _, entry := range entries {
-		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".md") {
-			continue
-		}
-
-		content, err := templates.ReadFile(filepath.Join("templates/example-posts", entry.Name()))
+	// 遍历并复制示例文章
+	return fs.WalkDir(templates, "templates/example-posts", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			return fmt.Errorf("failed to read example post %s: %w", entry.Name(), err)
+			return err
 		}
 
-		destPath := filepath.Join(p.Path, "content/posts", entry.Name())
+		// 跳过目录本身
+		if path == "templates/example-posts" {
+			return nil
+		}
+
+		// 计算相对路径
+		relPath, err := filepath.Rel("templates/example-posts", path)
+		if err != nil {
+			return fmt.Errorf("failed to get relative path: %w", err)
+		}
+
+		// 目标路径
+		destPath := filepath.Join(postsDir, relPath)
+
+		// 如果是目录，创建对应的目录
+		if d.IsDir() {
+			if err := os.MkdirAll(destPath, 0755); err != nil {
+				return fmt.Errorf("failed to create directory %s: %w", destPath, err)
+			}
+			return nil
+		}
+
+		// 复制文件
+		content, err := templates.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("failed to read template %s: %w", path, err)
+		}
+
 		if err := os.WriteFile(destPath, content, 0644); err != nil {
-			return fmt.Errorf("failed to write example post %s: %w", entry.Name(), err)
+			return fmt.Errorf("failed to write file %s: %w", destPath, err)
 		}
-	}
 
-	return nil
+		return nil
+	})
 }
 
 // initBuildTemplates 专门用于构建时的模板初始化
@@ -398,7 +436,7 @@ func (p *Project) installDependencies() error {
 	pkgPath := filepath.Join(themePath, "package.json")
 
 	if _, err := os.Stat(pkgPath); os.IsNotExist(err) {
-		return fmt.Errorf("package.json not found")
+		return fmt.Errorf("package.json not found at %s", pkgPath)
 	}
 
 	// 安装依赖
@@ -465,21 +503,44 @@ func min(a, b int) int {
 
 // installDefaultTheme 安装默认主题
 func (p *Project) installDefaultTheme() error {
-	themesDir := filepath.Join(p.Path, "themes")
-	defaultTheme := "default"
-
-	// 使用 go-git 从 GitHub 克隆主题
-	_, err := git.PlainClone(
-		filepath.Join(themesDir, defaultTheme),
-		false,
-		&git.CloneOptions{
-			URL:      "https://github.com/jiangjiax/stars-theme-default",
-			Progress: os.Stdout,
-		},
-	)
-	if err != nil {
-		return fmt.Errorf("failed to clone default theme: %w", err)
+	defaultThemePath := filepath.Join(p.Path, "themes", "default")
+	
+	// 创建默认主题目录
+	if err := os.MkdirAll(defaultThemePath, 0755); err != nil {
+		return fmt.Errorf("failed to create default theme directory: %w", err)
 	}
 
-	return nil
+	// 从嵌入的文件系统复制默认主题
+	return fs.WalkDir(templates, "templates/default-theme", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// 跳过主题目录本身
+		if path == "templates/default-theme" {
+			return nil
+		}
+
+		// 计算相对路径
+		relPath, err := filepath.Rel("templates/default-theme", path)
+		if err != nil {
+			return fmt.Errorf("failed to get relative path: %w", err)
+		}
+
+		// 目标路径
+		destPath := filepath.Join(defaultThemePath, relPath)
+
+		// 如果是目录
+		if d.IsDir() {
+			return os.MkdirAll(destPath, 0755)
+		}
+
+		// 复制文件
+		content, err := templates.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("failed to read theme file %s: %w", path, err)
+		}
+
+		return os.WriteFile(destPath, content, 0644)
+	})
 }

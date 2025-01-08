@@ -1,0 +1,36 @@
+{{ define "components/post-card" }}
+<div class="bg-stars-secondary rounded-xl p-6 hover:translate-y-[-4px] transition-all duration-300
+            border border-transparent hover:border-stars-accent/30 relative overflow-hidden">
+    <!-- 渐变条 -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-stars-accent to-stars-gold
+                transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+    
+    <h2 class="text-xl font-bold mb-3">
+        <a href="/posts/{{ .Slug }}" class="text-stars-text hover:text-stars-accent transition-colors">
+            {{ .Title }}
+        </a>
+    </h2>
+    
+    <div class="text-stars-muted text-sm mb-4 flex items-center">
+        <i class="far fa-calendar-alt mr-2"></i>
+        <time>{{ formatDate .Date }}</time>
+    </div>
+    
+    {{ if .Description }}
+    <p class="text-stars-muted mb-4 line-clamp-2">{{ .Description }}</p>
+    {{ end }}
+    
+    {{ if .Tags }}
+    <div class="flex flex-wrap gap-2">
+        {{ range .Tags }}
+        <a href="/tags/{{ . | urlize }}" 
+           class="text-sm px-3 py-1 rounded-full bg-stars-primary/50 text-stars-accent
+                  border border-stars-accent/30 hover:bg-stars-accent hover:text-stars-primary
+                  transition-all duration-300">
+            {{ . }}
+        </a>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>
+{{ end }} 

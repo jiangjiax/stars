@@ -1,0 +1,35 @@
+{{ define "components/header" }}
+<header class="fixed top-0 w-full bg-stars-secondary/80 backdrop-blur-md z-50 border-b border-stars-accent/10">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/" 
+               class="text-xl font-bold text-stars-accent hover:text-stars-gold transition-all duration-300
+                      relative group">
+                <i class="fas fa-star mr-2 group-hover:rotate-180 transition-transform duration-500"></i>
+                <span class="group-hover:tracking-wider transition-all duration-300">Stars</span>
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-stars-gold group-hover:w-full transition-all duration-300"></span>
+            </a>
+        </div>
+        <div class="flex items-center space-x-6">
+            <a href="/" class="nav-link group">
+                <span class="relative">
+                    首页
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-stars-accent group-hover:w-full transition-all duration-300"></span>
+                </span>
+            </a>
+            <a href="/posts" class="nav-link group">
+                <span class="relative">
+                    文章
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-stars-accent group-hover:w-full transition-all duration-300"></span>
+                </span>
+            </a>
+            <a href="/tags" class="nav-link group">
+                <span class="relative">
+                    标签云
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-stars-accent group-hover:w-full transition-all duration-300"></span>
+                </span>
+            </a>
+        </div>
+    </nav>
+</header>
+{{ end }} 

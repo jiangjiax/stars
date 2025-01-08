@@ -1,0 +1,46 @@
+{{ define "components/footer" }}
+<footer class="py-8 mt-12 bg-stars-secondary/30 backdrop-blur-sm border-t border-stars-accent/10">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <!-- 左侧版权信息 -->
+            <div class="text-stars-muted text-sm">
+                © {{ now.Format "2006" }} {{ .Site.Title }}
+            </div>
+
+            <!-- 订阅选项 -->
+            <div class="flex items-center gap-2">
+                <!-- RSS 订阅 -->
+                <a href="/feed.xml" 
+                   class="flex items-center gap-2 px-3 py-1.5 rounded-lg
+                          bg-stars-primary/20 text-stars-muted hover:text-stars-accent
+                          border border-stars-accent/10 hover:border-stars-accent/30
+                          transition-all duration-300"
+                   title="RSS 订阅">
+                    <i class="fas fa-rss"></i>
+                    <span class="text-sm">RSS</span>
+                </a>
+
+                <!-- 邮件订阅 -->
+                {{ if .Site.Newsletter.Enabled }}
+                <a href="https://buttondown.email/{{ .Site.Newsletter.Buttondown.Username }}" 
+                   target="_blank"
+                   class="flex items-center gap-2 px-3 py-1.5 rounded-lg
+                          bg-stars-primary/20 text-stars-muted hover:text-stars-accent
+                          border border-stars-accent/10 hover:border-stars-accent/30
+                          transition-all duration-300"
+                   title="邮件订阅">
+                    <i class="fas fa-envelope"></i>
+                    <span class="text-sm">邮件订阅</span>
+                </a>
+                {{ end }}
+            </div>
+
+            <!-- 右侧 Powered by -->
+            <div class="text-stars-muted text-sm">
+                Powered by <a href="https://github.com/yourusername/stars" 
+                            class="text-stars-accent hover:text-stars-gold">Stars</a>
+            </div>
+        </div>
+    </div>
+</footer>
+{{ end }} 

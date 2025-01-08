@@ -1,0 +1,7 @@
+name: "default"
+version: "1.0.0"
+author: "Stars Team"
+description: "The default theme for Stars blog"
+homepage: "https://github.com/jiangjiax/stars-theme-default"
+license: "MIT"
+tags: ["default", "blog", "clean"] 

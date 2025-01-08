@@ -1,0 +1,426 @@
+/* 导航栏 */
+.site-header {
+    @apply bg-stars-secondary/80 backdrop-blur-md fixed top-0 w-full z-50;
+}
+
+.nav-container {
+    @apply container mx-auto px-4 py-4 flex justify-between items-center;
+}
+
+/* 文章卡片 */
+.post-card {
+    @apply rounded-xl bg-stars-secondary/30 border-2 border-stars-accent/10;
+    @apply opacity-0 translate-y-3 backdrop-blur-sm;
+    @apply hover:scale-[1.01] hover:-translate-y-0.5;
+    @apply hover:shadow-md hover:shadow-stars-accent/5;
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 文章卡片悬浮效果 */
+.post-card:hover {
+    @apply border-stars-accent/30 bg-stars-secondary/40;
+}
+
+/* 文章卡片容器 */
+.post-card-inner {
+    @apply p-6 md:p-7 relative overflow-hidden;
+}
+
+/* 系列标识 */
+.series-badge {
+    @apply inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg;
+    @apply bg-stars-primary/10 border border-stars-accent/10 mb-4;
+    @apply backdrop-blur-sm;
+    @apply hover:bg-stars-primary/20 hover:border-stars-accent/20;
+    @apply transition-all duration-300;
+}
+
+.series-badge-text {
+    @apply text-sm font-medium text-stars-accent;
+    @apply font-mono tracking-wide;
+}
+
+.series-badge-number {
+    @apply text-xs px-2 py-0.5 rounded-full;
+    @apply bg-stars-accent/10 text-stars-accent/90;
+    @apply font-mono;
+}
+
+/* 文章标题 */
+.post-title {
+    @apply text-2xl font-bold mb-3;
+}
+
+.post-title a {
+    @apply block text-stars-text;
+    @apply hover:text-stars-accent;
+    @apply relative inline-block;
+    transition: color 0.3s ease;
+}
+
+.post-title a::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 w-0 h-0.5;
+    @apply bg-stars-accent/50;
+    @apply opacity-0;
+    @apply w-full;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.post-title a:hover::after {
+    @apply opacity-100;
+    transform: scaleX(1);
+}
+
+/* 文章描述 */
+.post-description {
+    @apply text-stars-muted/90 text-base mb-5 leading-relaxed;
+    @apply group-hover:text-stars-muted;
+    transition: color 0.3s ease;
+}
+
+/* 标签样式 */
+.post-tag {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 text-sm;
+    @apply rounded-lg bg-stars-primary/10 border border-stars-accent/10;
+    @apply hover:bg-stars-accent/10 hover:border-stars-accent/30;
+    @apply hover:scale-[1.02] hover:-translate-y-0.5;
+    @apply active:scale-95;
+    @apply backdrop-blur-sm;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-tag i {
+    @apply text-stars-accent/60 group-hover:text-stars-accent text-xs;
+    transition: color 0.3s ease;
+}
+
+/* 元信息样式 */
+.post-meta {
+    @apply flex items-center gap-4 text-sm text-stars-muted/70;
+    @apply font-mono;
+}
+
+.post-meta-item {
+    @apply flex items-center gap-1.5;
+    @apply hover:text-stars-accent/80;
+    transition: color 0.2s ease;
+}
+
+/* 阅读时间和日期 */
+.post-info {
+    @apply flex items-center gap-2 text-sm font-mono;
+    color: rgba(137, 147, 176, 0.6);
+}
+
+/* 筛选按钮 */
+.filter-button {
+    @apply relative overflow-hidden;
+    @apply hover:shadow-lg hover:shadow-stars-accent/5;
+}
+
+/* 激活状态 */
+.filter-button[data-active="true"] {
+    @apply border-stars-accent bg-stars-accent/10;
+    @apply shadow-md shadow-stars-accent/10;
+}
+
+/* 添加极客风格的装饰效果 */
+.filter-button::before {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-full h-0.5;
+    @apply bg-gradient-to-r from-stars-accent/50 to-transparent;
+    @apply scale-x-0 origin-left;
+    @apply transition-transform duration-300;
+}
+
+.filter-button:hover::before,
+.filter-button[data-active="true"]::before {
+    @apply scale-x-100;
+}
+
+/* 添加鼠标悬停时的光晕效果 */
+.filter-button::after {
+    content: '';
+    @apply absolute inset-0 rounded-xl;
+    @apply bg-stars-accent/5 opacity-0;
+    @apply transition-opacity duration-300;
+    pointer-events: none;
+}
+
+.filter-button:hover::after {
+    @apply opacity-100;
+}
+
+/* 图标样式 */
+.filter-button i {
+    @apply transition-all duration-300;
+}
+
+.filter-button:hover i {
+    @apply text-stars-accent;
+}
+
+/* 移除旋转动画相关的样式 */
+.filter-button i {
+    @apply text-xs;
+}
+
+/* 移除悬浮时的旋转效果 */
+.filter-button:hover i {
+    /* 移除 rotate-180 */
+}
+
+/* 空状态 */
+#empty-state {
+    @apply text-center py-12;
+}
+
+#empty-state i {
+    @apply text-4xl mb-4;
+    color: rgba(137, 147, 176, 0.3);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .post-card-container {
+        @apply p-4;
+    }
+    
+    .post-title {
+        @apply text-xl;
+    }
+    
+    .post-meta {
+        @apply flex-wrap;
+    }
+    
+    /* 筛选器横向滚动优化 */
+    .overflow-x-auto {
+        @apply relative;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    /* 移动端按钮间距 */
+    .flex-nowrap {
+        @apply gap-2;
+    }
+
+    .post-card-inner {
+        @apply p-5;
+    }
+    
+    .post-title {
+        @apply text-xl mb-2;
+    }
+    
+    .post-description {
+        @apply text-sm mb-4;
+    }
+    
+    .series-badge {
+        @apply mb-3;
+    }
+}
+
+/* 桌面端按钮间距 */
+@media (min-width: 769px) {
+    .flex-wrap {
+        @apply gap-3;
+    }
+    
+    /* 系列和标签筛选器之间的间距 */
+    .mb-4.md\:mb-6 {
+        @apply mb-8;
+    }
+}
+
+/* 分页控件样式 */
+.pagination {
+    @apply mt-12 flex justify-center;
+}
+
+/* 分页按钮基础样式 */
+.pagination-btn {
+    @apply flex items-center gap-2 px-5 py-2.5;
+    @apply rounded-xl bg-stars-secondary/80 backdrop-blur-sm;
+    @apply border-2 border-stars-accent/20;
+    @apply text-sm font-medium;
+    @apply hover:border-stars-accent/40 hover:bg-stars-accent/5;
+    @apply hover:scale-105 active:scale-95;
+    @apply transition-all duration-300;
+}
+
+/* 上一页按钮特殊样式 */
+.pagination-btn.prev-btn i {
+    @apply transition-transform duration-300;
+}
+
+.pagination-btn.prev-btn:hover:not(.disabled) i {
+    @apply -translate-x-1;
+}
+
+/* 下一页按钮特殊样式 */
+.pagination-btn.next-btn i {
+    @apply transition-transform duration-300;
+}
+
+.pagination-btn.next-btn:hover:not(.disabled) i {
+    @apply translate-x-1;
+}
+
+/* 禁用状态 */
+.pagination-btn.disabled {
+    @apply opacity-50 cursor-not-allowed;
+    @apply hover:scale-100 hover:bg-stars-secondary/80;
+    @apply border-stars-accent/10;
+}
+
+/* 页码指示器 */
+.pagination-info {
+    @apply flex items-center gap-2 px-4;
+    @apply font-mono text-sm;
+    @apply bg-stars-secondary/60 backdrop-blur-sm;
+    @apply border border-stars-accent/10 rounded-lg;
+}
+
+.pagination-info .current {
+    @apply text-stars-accent font-bold;
+}
+
+.pagination-info .divider {
+    @apply text-stars-muted/60;
+}
+
+.pagination-info .total {
+    @apply text-stars-muted;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .pagination {
+        @apply mt-8;
+    }
+
+    .pagination-btn {
+        @apply px-4 py-2;
+    }
+
+    .pagination-btn span {
+        @apply hidden;
+    }
+
+    .pagination-btn i {
+        @apply text-lg;
+    }
+
+    .pagination-info {
+        @apply px-3 py-1;
+    }
+}
+
+/* 系列描述提示 */
+.series-description {
+    @apply absolute left-0 right-0 -bottom-12 px-4 py-2;
+    @apply bg-stars-secondary/95 backdrop-blur-sm;
+    @apply border border-stars-accent/20 rounded-lg;
+    @apply text-sm text-stars-muted;
+    @apply opacity-0 invisible;
+    @apply transform -translate-y-2;
+    @apply transition-all duration-300;
+    @apply z-10;
+    white-space: normal;
+    width: max-content;
+    max-width: 300px;
+}
+
+/* 显示描述提示 */
+.filter-button:hover .series-description {
+    @apply opacity-100 visible;
+    @apply translate-y-0;
+}
+
+/* ���按钮图标 */
+.filter-button i {
+    @apply transition-all duration-300;
+    @apply w-4 text-center; /* 确保图标宽度一致 */
+}
+
+/* 选中状态图标样式 */
+.filter-button[data-active="true"] i {
+    @apply text-stars-accent;
+}
+
+/* 系列筛选器样式 */
+.series-item {
+    @apply block px-4 py-3 rounded-xl;
+    @apply bg-stars-primary/20 border-2 border-stars-accent/10;
+    @apply backdrop-blur-sm;
+    @apply hover:border-stars-accent/30 hover:bg-stars-accent/5;
+    @apply transition-all duration-300;
+}
+
+/* 激活状态 */
+.series-item.active {
+    @apply border-stars-accent/40 bg-stars-accent/10;
+    @apply shadow-md shadow-stars-accent/5;
+}
+
+/* 系列数量标签 */
+.series-count {
+    @apply px-2 py-0.5 text-xs rounded-full;
+    @apply bg-stars-accent/10 text-stars-accent/90;
+    @apply font-mono;
+}
+
+/* 系列描述文本 - 限制最大高度 */
+.series-desc {
+    @apply line-clamp-2;
+    @apply group-hover:text-stars-muted;
+    max-height: 2.5rem; /* 约两行文本高度 */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+/* 图标样式 */
+.series-item i {
+    @apply transition-colors duration-300;
+    @apply w-4 text-center text-stars-accent/60;
+}
+
+.series-item:hover i,
+.series-item.active i {
+    @apply text-stars-accent;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .series-item {
+        @apply min-w-[200px] flex-shrink-0;
+    }
+    
+    /* 在移动端的选中项中显示描述 */
+    .series-item.active .series-desc {
+        @apply block mt-2;
+    }
+
+    /* 移动端的滚动列表中隐藏描述 */
+    .overflow-x-auto .series-desc {
+        @apply hidden;
+    }
+}
+
+/* 桌面端布局 */
+@media (min-width: 769px) {
+    .series-item {
+        @apply w-[calc(33.333%-0.75rem)];
+    }
+}

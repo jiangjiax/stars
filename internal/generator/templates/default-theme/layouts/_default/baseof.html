@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ .StaticPath }}/images/favicon.ico">
+    <title>
+        {{ if .IsPost }}
+            {{ if .Title }}{{ .Title }} - {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}
+        {{ else }}
+            {{ if .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}
+        {{ end }}
+    </title>
+    
+    <!-- Meta 标签 -->
+    <meta name="description" content="{{ if .IsPost }}{{ .Post.Description }}{{ else }}{{ .Site.Author.Name }}:{{ .Site.Author.Bio }}{{ end }}">
+    {{ if .IsPost }}
+    <meta name="keywords" content="{{ delimit .Post.Tags ", " }}">
+    {{ else }}
+    <meta name="keywords" content="{{ delimit .Site.SEO.Keywords ", " }}">
+    {{ end }}
+    <meta name="author" content="{{ .Site.Author.Name }}">
+    
+    <!-- 设置静态资源基础路径 -->
+    <meta name="static-path" content="{{ .StaticPath }}">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/styles.built.css">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="alternate" type="application/rss+xml" 
+        title="{{ .Site.Title }}" 
+        href="{{ .Site.BaseURL }}/feed.xml">
+</head>
+<body class="bg-white dark:bg-gray-900 min-h-full flex flex-col">
+    <!-- 星空背景容器 -->
+    <div id="stars-container" class="stars fixed inset-0 z-0 pointer-events-none"></div>
+
+    <!-- 导航栏 -->
+    {{ template "components/header" . }}
+
+    <!-- 主要内容 - 增加 flex-grow 确保占满剩余空间 -->
+    <main class="flex-grow pt-20 relative z-10">
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <!-- 页脚 - 移除 mt-auto -->
+    {{ template "components/footer" . }}
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <script src="/static/dist/{{ AssetPath "main.bundle.js" }}"></script>
+    {{ if .IsPost }}
+    <script src="/static/dist/{{ AssetPath "nft.bundle.js" }}"></script>
+    {{ end }}
+</body>
+</html> 
