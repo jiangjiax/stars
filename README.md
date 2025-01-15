@@ -37,8 +37,10 @@ Stars 项目支持多链部署的 NFT 合约系统。查看 [CONTRACTS.md](./CON
 
 感谢以下贡献者的支持：
 
-<a href="https://github.com/your-username/stars/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=your-username/stars" />
+<a href="https://github.com/jiangjiax/stars/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jiangjiax/stars" />
 </a>
 
 ## 快速开始
+
+[Stars 入门](./internal/generator/templates/example-posts/stars/welcome.md)

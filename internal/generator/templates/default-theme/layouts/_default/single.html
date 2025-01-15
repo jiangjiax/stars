@@ -205,7 +205,7 @@
 
                                 {{ if .Post.Verification.NFT.ChainId }}
                                 <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
-                                    <div class="text-stars-muted text-sm mb-1">链</div>
+                                    <div class="text-stars-muted text-sm mb-1">Chain ID</div>
                                     <div class="text-stars-accent font-mono">{{ .Post.Verification.NFT.ChainId }}</div>
                                 </div>
                                 {{ end }}
@@ -232,8 +232,8 @@
                                     class="px-6 py-3 rounded-xl bg-stars-accent/10 text-stars-accent 
                                            hover:bg-stars-accent/20 transition-all duration-300">
                                 <span class="flex items-center gap-2">
-                                    <i class="fas fa-cube"></i>
-                                    <span id="mintButtonText2">铸造 NFT</span>
+                                    <i class="fas fa-cube text-stars-gold"></i>
+                                    <span id="mintButtonText2" class="text-stars-gold">铸造 NFT</span>
                                 </span>
                                 <span id="mintSpinner2" class="hidden">
                                     <i class="fas fa-spinner fa-spin"></i>

@@ -11,7 +11,7 @@ tags:
 title: Stars 主题
 verification:
     arweaveId: a_YLv8-4tzPWY0jn7ZcYpoAtp2CI5Biux0p2vIgV9pg
-    nftContract: 0x760410d585110e149233919357E7C866bb51A841
+    nftContract: 0x5c83f2287833F567b1D80D7B981084eb5CaeF445
     author: 0x16572b97410200e79AB6c9423F8d9778F0Fb9C54
     contentHash: 
     nft:
