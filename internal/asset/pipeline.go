@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 type Pipeline struct {
@@ -24,6 +25,11 @@ func New(projectDir string, theme string) *Pipeline {
 
 // BuildAssets 构建所有资源
 func (p *Pipeline) BuildAssets() error {
+	// 在构建新资源之前清理旧文件
+	if err := p.CleanOldAssets(); err != nil {
+		return err
+	}
+
 	// 先构建 CSS
 	if err := p.BuildCSS(); err != nil {
 		return fmt.Errorf("failed to build CSS: %w", err)
@@ -109,4 +115,31 @@ func (p *Pipeline) GetAssetPath(name string) string {
 		return hash
 	}
 	return name
+}
+
+// CleanOldAssets 清理旧的资源文件
+func (p *Pipeline) CleanOldAssets() error {
+	// 获取 dist 目录
+	distDir := filepath.Join(p.projectDir, "themes", p.theme, "static/dist")
+
+	// 读取目录下所有文件
+	entries, err := os.ReadDir(distDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil // dist 目录不存在时直接返回
+		}
+		return fmt.Errorf("failed to read dist directory: %w", err)
+	}
+
+	// 删除所有 .js 文件
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".js") {
+			filePath := filepath.Join(distDir, entry.Name())
+			if err := os.Remove(filePath); err != nil {
+				return fmt.Errorf("failed to remove old asset file %s: %w", filePath, err)
+			}
+		}
+	}
+
+	return nil
 }

@@ -178,28 +178,25 @@ export async function mintNFT() {
         console.error('Minting failed:', error);
         let message = '铸造失败，请重试';
         
-        // 声明在这里，以便后面的错误处理也能访问
-        let contractABI;
-        let iface;
-        
         if (error.code === 4001) {
             message = '用户取消了操作';
-        } else if (error.code === 'UNPREDICTABLE_GAS_LIMIT') {
+        } else if (error.code === 'UNPREDICTABLE_GAS_LIMIT' || error.error) {
             try {
                 // 加载 ABI
-                contractABI = await loadContractABI();
-                // 获取合约 interface
-                iface = new ethers.utils.Interface(contractABI);
-                // 获取错误数据
-                const errorData = error.error?.data || error.data;
+                const contractABI = await loadContractABI();
+                const iface = new ethers.utils.Interface(contractABI);
+                
+                // 获取错误数据 - 处理多层嵌套的错误结构
+                let errorData = error.error?.data?.data || // 处理 RPC 错误
+                              error.error?.error?.data?.data || // 处理 Provider 错误
+                              error.data?.data || // 直接错误数据
+                              error.error?.data || // 其他可能的错误结构
+                              error.data;
+                
                 if (errorData) {
-                    // 解码错误
                     const decodedError = iface.parseError(errorData);
                     // 根据错误名称判断
                     switch (decodedError.name) {
-                        case 'RoyaltyFeeTooHigh':
-                            message = '版税设置过高（不能超过100%）';
-                            break;
                         case 'AlreadyMinted':
                             message = '此文章已被铸造';
                             break;
@@ -221,26 +218,19 @@ export async function mintNFT() {
                         case 'NameEmpty':
                             message = '文章标题不能为空';
                             break;
+                        case 'RoyaltyFeeTooHigh':
+                            message = '版税设置过高（不能超过100%）';
+                            break;
                         default:
                             message = `合约错误: ${decodedError.name}`;
                     }
                 }
             } catch (decodeError) {
                 console.error('Failed to decode error:', decodeError);
-                message = '合约调用失败，请检查参数';
             }
         } else if (error.message.includes('insufficient funds')) {
             message = '钱包余额不足';
         }
-
-        // 打印详细错误信息用于调试
-        // console.log('Error details:', {
-        //     code: error.code,
-        //     errorData: error.error?.data,
-        //     decodedError: error.error?.data && iface ? iface.parseError(error.error.data) : null,
-        //     message: error.message,
-        //     params: error.transaction
-        // });
 
         window.showToast(message, 8000, 'error');
         setLoading(false);

@@ -67,7 +67,7 @@ tags:
 使用 `verification` 字段配置区块链相关信息：
 
 - `arweaveId`: Arweave 存储 ID，你也可以放置别的存储方ID，但我建议使用去中心化的基础设施，比如[ArDrive](https://ardrive.io/)
-- `nftContract`: NFT 合约地址，你可以在[这里](https://github.com/jiangjiax/stars/blob/main/CONTRACTS.md)查看当前支持的智能合约地址
+- `nftContract`: NFT 合约地址，你可以在[这里](https://github.com/jiangjiax/stars/blob/main/CONTRACTS.md)查看当前我们部署的智能合约地址，我们部署了多个区块链网路的地址，你也可以修改合约代码并部署得到你自己的合约地址
 - `author`: 作者钱包地址
 - `contentHash`: 文章内容哈希
 

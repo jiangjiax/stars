@@ -11,8 +11,15 @@
 ### Ethereum Sepolia
 
 - **NFT Contract**
-  - 地址: `0x760410d585110e149233919357E7C866bb51A841`
+  - 地址: `0x5c83f2287833F567b1D80D7B981084eb5CaeF445`
   - [合约代码](https://github.com/jiangjiax/stars-contracts)
-  - [Etherscan](https://sepolia.etherscan.io/address/0x760410d585110e149233919357E7C866bb51A841)
-  - 部署时间: 2024-12
-  - 当前版本: v1.0.0
+  - [Etherscan](https://sepolia.etherscan.io/address/0x5c83f2287833F567b1D80D7B981084eb5CaeF445)
+  - Chain ID: 11155111
+
+### Telos Testnet
+
+- **NFT Contract**
+  - 地址: `0x903e48Ca585dBF4dFeb74f2864501feB6f0dF369`
+  - [合约代码](https://github.com/jiangjiax/stars-contracts)
+  - [TelosScan](https://testnet.teloscan.io/address/0x903e48Ca585dBF4dFeb74f2864501feB6f0dF369)
+  - Chain ID: 41
