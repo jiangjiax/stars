@@ -10,7 +10,7 @@ tags:
 title: Stars 入门
 verification:
     arweaveId: q98K4NSlJy2pEMx9bFMxXYBcStUVEjfKIHnviQkpHjE
-    nftContract: 0x760410d585110e149233919357E7C866bb51A841
+    nftContract: 0x5c83f2287833F567b1D80D7B981084eb5CaeF445
     author: 0x16572b97410200e79AB6c9423F8d9778F0Fb9C54
     contentHash: 
     nft:

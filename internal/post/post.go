@@ -287,8 +287,37 @@ func slugify(title string) string {
 
 // calculateReadingTime 计算文章阅读时间
 func calculateReadingTime(content string) int {
-	words := len(strings.Fields(content))
-	return (words + 200) / 250 // 假设平均阅读速度为每分钟250词
+	// 移除代码块和 HTML 标签
+	content = regexp.MustCompile("```[\\s\\S]*?```").ReplaceAllString(content, "")
+	content = regexp.MustCompile("<[^>]+>").ReplaceAllString(content, "")
+	
+	// 分别计算中文和英文字数
+	chineseCount := len(regexp.MustCompile(`[\p{Han}]`).FindAllString(content, -1))
+	
+	// 移除中文字符后计算英文单词数
+	contentWithoutChinese := regexp.MustCompile(`[\p{Han}]`).ReplaceAllString(content, "")
+	words := strings.Fields(contentWithoutChinese)
+	englishCount := len(words)
+	
+	// 中文阅读速度：约每分钟 300 字
+	// 英文阅读速度：约每分钟 200 词
+	chineseTime := (chineseCount + 299) / 300
+	englishTime := (englishCount + 199) / 200
+	
+	// 取较大值，并确保至少返回 1 分钟
+	readingTime := max(chineseTime, englishTime)
+	if readingTime < 1 {
+		readingTime = 1
+	}
+	
+	return readingTime
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 // generateTOCFromHTML 从渲染后的 HTML 中提取标题和 ID 来生成目录

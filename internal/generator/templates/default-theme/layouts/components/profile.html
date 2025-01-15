@@ -387,51 +387,59 @@
             <i class="fab fa-github mr-3"></i>
             GitHub 统计
         </h3>
-        <div class="grid grid-cols-1 gap-6">
+        <div class="grid grid-cols-1 gap-4 md:gap-6">
             <!-- GitHub 贡献图 -->
-            <div class="group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-5 overflow-hidden 
+            <div class="hidden md:block group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-3 md:p-5 overflow-hidden 
                         border border-stars-accent/10 hover:border-stars-accent/30 
-                        transition-all duration-300 md:cursor-default cursor-pointer"
-                 onclick="if(window.innerWidth < 768) showImageModal(this.querySelector('img.stats-img').src)">
+                        transition-all duration-300">
                 <img src="https://ghchart.rshah.org/64ffda/{{ .Site.Author.GitHub }}" 
-                    alt="GitHub Contributions" 
-                    class="w-full stats-img">
-                <div class="text-center text-xs text-stars-muted/70 mt-2 font-mono md:hidden">点击查看大图</div>
+                     alt="GitHub Contributions" 
+                     class="w-full stats-img">
             </div>
             
             <!-- GitHub 统计卡片 -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- 基本统计 -->
-                <div class="group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-5 
+                <div class="group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-3 md:p-5 
                             border border-stars-accent/10 hover:border-stars-accent/30 
-                            transition-all duration-300 md:cursor-default cursor-pointer" 
-                     onclick="if(window.innerWidth < 768) showImageModal(this.querySelector('img.stats-img').src)">
+                            transition-all duration-300">
                     <!-- 桌面端显示 -->
-                    <img src="https://github-readme-stats.vercel.app/api?username={{ .Site.Author.GitHub }}&show_icons=true&theme=tokyonight&hide_border=true&bg_color=112240&icon_color=64ffda&title_color=64ffda&text_color=ccd6f6&custom_title=GitHub%20活跃度&hide_rank=true&card_width=495" 
+                    <img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api?username={{ .Site.Author.GitHub }}&show_icons=true&theme=tokyonight&hide_border=true&bg_color=112240&icon_color=64ffda&title_color=64ffda&text_color=ccd6f6&card_width=100%&hide_rank=true" 
                          alt="GitHub Stats" 
                          class="hidden md:block w-full h-[195px] object-contain stats-img">
                     <!-- 移动端显示 -->
-                    <img src="https://github-readme-stats.vercel.app/api?username={{ .Site.Author.GitHub }}&show_icons=true&theme=tokyonight&hide_border=true&bg_color=112240&icon_color=64ffda&title_color=64ffda&text_color=ccd6f6&custom_title=GitHub%20活跃度&card_width=100%&hide_rank=true" 
+                    <img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api?username={{ .Site.Author.GitHub }}&show_icons=true&theme=tokyonight&hide_border=true&bg_color=112240&icon_color=64ffda&title_color=64ffda&text_color=ccd6f6&hide_rank=true&card_width=100%&hide=contribs" 
                          alt="GitHub Stats" 
-                         class="md:hidden w-full stats-img">
-                    <div class="text-center text-xs text-stars-muted/70 mt-2 font-mono md:hidden">点击查看大图</div>
+                         class="md:hidden w-full h-[160px] object-contain stats-img">
                 </div>
                 
-                <!-- 连续贡献 -->
-                <div class="group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-5 
+                <!-- 语言统计 -->
+                <div class="group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-3 md:p-5 
                             border border-stars-accent/10 hover:border-stars-accent/30 
-                            transition-all duration-300 md:cursor-default cursor-pointer"
-                     onclick="if(window.innerWidth < 768) showImageModal(this.querySelector('img.stats-img').src)">
+                            transition-all duration-300">
                     <!-- 桌面端显示 -->
-                    <img src="https://github-readme-streak-stats.herokuapp.com/?user={{ .Site.Author.GitHub }}&theme=tokyonight&hide_border=true&background=112240&ring=64ffda&fire=ffd700&currStreakLabel=64ffda&locale=zh&card_width=495" 
-                         alt="GitHub Streak"
+                    <img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/top-langs/?username={{ .Site.Author.GitHub }}&layout=compact&theme=tokyonight&hide_border=true&bg_color=112240&title_color=64ffda&text_color=ccd6f6&card_width=100%&hide=mdx,markdown&langs_count=6" 
+                         alt="Top Languages" 
                          class="hidden md:block w-full h-[195px] object-contain stats-img">
                     <!-- 移动端显示 -->
-                    <img src="https://github-readme-streak-stats.herokuapp.com/?user={{ .Site.Author.GitHub }}&theme=tokyonight&hide_border=true&background=112240&ring=64ffda&fire=ffd700&currStreakLabel=64ffda&locale=zh&card_width=100%" 
-                         alt="GitHub Streak"
-                         class="md:hidden w-full stats-img">
-                    <div class="text-center text-xs text-stars-muted/70 mt-2 font-mono md:hidden">点击查看大图</div>
+                    <img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/top-langs/?username={{ .Site.Author.GitHub }}&layout=compact&theme=tokyonight&hide_border=true&bg_color=112240&title_color=64ffda&text_color=ccd6f6&card_width=100%&hide=mdx,markdown&langs_count=6" 
+                         alt="Top Languages" 
+                         class="md:hidden w-full h-[160px] object-contain stats-img">
                 </div>
+            </div>
+            
+            <!-- GitHub Profile Trophy -->
+            <div class="group bg-stars-secondary/80 backdrop-blur-sm rounded-xl p-3 md:p-5 
+                        border border-stars-accent/10 hover:border-stars-accent/30 
+                        transition-all duration-300">
+                <!-- 桌面端显示 -->
+                <img src="https://github-profile-trophy.vercel.app/?username={{ .Site.Author.GitHub }}&theme=tokyonight&no-frame=true&column=8&margin-w=15&margin-h=15" 
+                     alt="GitHub Trophy" 
+                     class="hidden md:block w-full stats-img">
+                <!-- 移动端显示 -->
+                <img src="https://github-profile-trophy.vercel.app/?username={{ .Site.Author.GitHub }}&theme=tokyonight&no-frame=true&column=3&margin-w=15&margin-h=15" 
+                     alt="GitHub Trophy" 
+                     class="md:hidden w-full stats-img">
             </div>
         </div>
     </div>
@@ -595,22 +603,6 @@
         </div>
         <div id="qrcode" class="flex justify-center p-4 bg-white rounded-lg"></div>
         <p class="text-center text-stars-muted mt-4">扫描二维码在移动设备上查看</p>
-    </div>
-</div>
-
-<!-- 图片查看弹窗 - 优化动端显示 -->
-<div id="imageModal" class="modal fixed inset-0 bg-black/90 items-center justify-center z-50 p-4 hidden">
-    <div class="relative w-full max-w-4xl mx-auto">
-        <img id="modalImage" src="" alt="Preview" class="w-full h-auto">
-        <button onclick="closeImageModal()" 
-                class="absolute -top-12 right-0 w-10 h-10 flex items-center justify-center rounded-full 
-                       bg-stars-secondary/50 text-stars-muted hover:text-stars-accent transition-all">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-        <!-- 添加提示文本 -->
-        <div class="absolute -bottom-8 left-0 right-0 text-center text-stars-muted text-sm">
-            点击空白处关闭
-        </div>
     </div>
 </div>
 

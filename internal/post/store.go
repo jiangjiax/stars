@@ -471,10 +471,21 @@ func (s *Store) GetPostsByTag(tag string) []*Post {
 // GetPostsBySeries 获取指定系列的所有文章
 func (s *Store) GetPostsBySeries(series string) []*Post {
 	var posts []*Post
+	// 标准化输入的系列名
+	normalizedSeries := strings.ReplaceAll(series, "-", " ")
+	
 	for _, p := range s.posts {
-		if p.Series == series {
+		// 标准化文章的系列名
+		normalizedPostSeries := strings.ReplaceAll(p.Series, "-", " ")
+		if normalizedPostSeries == normalizedSeries {
 			posts = append(posts, p)
 		}
 	}
+	
+	// 按 SeriesOrder 排序
+	sort.Slice(posts, func(i, j int) bool {
+		return posts[i].SeriesOrder < posts[j].SeriesOrder
+	})
+	
 	return posts
 }
