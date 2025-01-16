@@ -27,7 +27,7 @@ author:
   name: "Your Name"  # 姓名
   title: "Software Engineer"  # 职位
   avatar: "/static/images/avatar.jpg"  # 头像
-  bio: "热衷于 Web3 和云原生技术的开发者，正在构建去中心化的未来。"  # 个人简介
+  bio: "A developer passionate about Web3 and cloud-native technologies, building the decentralized future."  # 个人简介
   location: "中国，深圳" # 所在地
   github: "" # 你的 GitHub 账号用户名
   status: "正在寻找机会"  # 状态
