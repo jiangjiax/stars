@@ -1,6 +1,7 @@
 package asset
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -54,6 +55,11 @@ func (p *Pipeline) BuildAssets() error {
 
 	if err := json.Unmarshal(data, &p.assetMap); err != nil {
 		return fmt.Errorf("failed to parse asset manifest: %w", err)
+	}
+
+	// 处理 ABI 文件
+	if err := p.processABIFiles(); err != nil {
+		return fmt.Errorf("failed to process ABI files: %w", err)
 	}
 
 	return nil
@@ -138,6 +144,55 @@ func (p *Pipeline) CleanOldAssets() error {
 			if err := os.Remove(filePath); err != nil {
 				return fmt.Errorf("failed to remove old asset file %s: %w", filePath, err)
 			}
+		}
+	}
+
+	return nil
+}
+
+// 添加新方法处理 ABI 文件
+func (p *Pipeline) processABIFiles() error {
+	// ABI 文件源目录
+	abiDir := filepath.Join(p.projectDir, "themes", p.theme, "static", "abi")
+	
+	// 确保目标目录存在
+	distDir := filepath.Join(p.projectDir, "themes", p.theme, "static", "dist", "abi")
+	if err := os.MkdirAll(distDir, 0755); err != nil {
+		return err
+	}
+
+	// 遍历处理所有 ABI 文件
+	entries, err := os.ReadDir(abiDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".json") {
+			// 读取文件内容
+			content, err := os.ReadFile(filepath.Join(abiDir, entry.Name()))
+			if err != nil {
+				return err
+			}
+
+			// 计算内容哈希
+			hashBytes := sha256.Sum256(content)
+			hash := fmt.Sprintf("%x", hashBytes[:16])
+			
+			// 生成新文件名
+			baseName := strings.TrimSuffix(entry.Name(), ".json")
+			newName := fmt.Sprintf("%s.%s.json", baseName, hash)
+			
+			// 写入新文件
+			if err := os.WriteFile(filepath.Join(distDir, newName), content, 0644); err != nil {
+				return err
+			}
+
+			// 更新资源映射
+			p.assetMap[entry.Name()] = fmt.Sprintf("abi/%s", newName)
 		}
 	}
 

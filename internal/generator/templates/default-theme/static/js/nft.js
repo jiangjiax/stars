@@ -21,8 +21,10 @@ function getArticleData() {
 // 加载 ABI
 async function loadContractABI() {
     try {
-        const staticPath = document.querySelector('meta[name="static-path"]').content;
-        const response = await fetch(`${staticPath}/abi/ArticleNFT.json`);
+        // 使用资源哈希版本的文件名
+        const abiPath = document.querySelector('meta[name="abi-path"]').content;
+        const response = await fetch(`${abiPath}`);
+        console.log("response:", `${abiPath}`);
         const data = await response.json();
         return data.abi;
     } catch (error) {
@@ -183,7 +185,6 @@ export async function mintNFT() {
         } else if (error.code === 'UNPREDICTABLE_GAS_LIMIT' || error.error) {
             try {
                 // 加载 ABI
-                const contractABI = await loadContractABI();
                 const iface = new ethers.utils.Interface(contractABI);
                 
                 // 获取错误数据 - 处理多层嵌套的错误结构
