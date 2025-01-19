@@ -153,3 +153,18 @@ newsletter:
     username: ""  # Buttondown 用户名
     # apiKey: ""   # Buttondown API key (可选,用于后续功能扩展)
   description: "订阅获取最新文章更新"  # 订阅描述文本
+
+# 默认文章验证信息配置
+verification:
+  arweaveId: ""
+  nftContract: ""
+  author: ""
+  contentHash: ""
+  nft:
+    price: "0"
+    maxSupply: 100
+    royaltyFee: 1000
+    onePerAddress: true
+    version: "1.0.0"
+    chainId: 1
+    tokenSymbol: "ETH"  # 可以根据不同链修改，如 "BNB"、"MATIC" 等

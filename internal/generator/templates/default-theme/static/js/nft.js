@@ -24,7 +24,6 @@ async function loadContractABI() {
         // 使用资源哈希版本的文件名
         const abiPath = document.querySelector('meta[name="abi-path"]').content;
         const response = await fetch(`${abiPath}`);
-        console.log("response:", `${abiPath}`);
         const data = await response.json();
         return data.abi;
     } catch (error) {
@@ -55,7 +54,7 @@ export async function mintNFT() {
 
     // 检是否安装了 MetaMask
     if (typeof window.ethereum === 'undefined') {
-        window.showToast('请先安装并登录 MetaMask 钱包', 'error');
+        window.showToast('请先安装并登录 MetaMask 钱包', 8000, 'error');
         return;
     }
 
@@ -116,7 +115,8 @@ export async function mintNFT() {
         const balance = await provider.getBalance(userAddress);
         const price = ethers.utils.parseEther(verification.NFT.Price);
         if (balance.lt(price.mul(2))) { // 确保有足够余额支付 gas
-            window.showToast('钱包余额不足，请确保有足够的测试币（建议至少 0.002 ETH）', 8000, 'error');
+            window.showToast('钱包余额不足，请确保有足够的测试币（建议至少 0.002 ' + 
+                verification.NFT.TokenSymbol + '）', 8000, 'error');
             return;
         }
 
