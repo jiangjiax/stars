@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
+	"github.com/jiangjiax/stars/internal/config"
+	"github.com/jiangjiax/stars/internal/post"
 )
 
 var (
@@ -85,32 +87,46 @@ This command will create a new markdown file in the content/posts directory.`,
 	},
 }
 
-// 文章模板
-const postTemplate = `---
+var postTemplate = `---
 title: "{{ .Title }}"
-date: {{ .Date }}{{if .Description}}
-description: "{{ .Description }}"{{end}}{{if .Tags}}
-tags: [{{ .Tags }}]{{end}}{{if .Series}}
-series: "{{ .Series }}"{{end}}{{if .SeriesOrder}}
-seriesOrder: {{ .SeriesOrder }}{{end}}{{if .Draft}}
-draft: true{{end}}{{if .Slug}}
-slug: "{{ .Slug }}"{{end}}
+date: {{ .Date.Format "2006-01-02" }}
+{{- if .Description }}
+description: "{{ .Description }}"
+{{- end }}
+{{- if .Series }}
+series: "{{ .Series }}"
+{{- end }}
+{{- if .SeriesOrder }}
+seriesOrder: {{ .SeriesOrder }}
+{{- end }}
+{{- if .Tags }}
+tags: [{{ range $i, $tag := .Tags }}{{if $i}}, {{end}}"{{ $tag }}"{{ end }}]
+{{- end }}
+{{- if .Slug }}
+slug: "{{ .Slug }}"
+{{- end }}
+{{- if .Draft }}
+draft: true
+{{- end }}
+{{- if .Verification }}
+verification:
+  arweaveId: "{{ .Verification.ArweaveId }}"
+  nftContract: "{{ .Verification.NftContract }}"
+  author: "{{ .Verification.Author }}"
+  contentHash: "{{ .Verification.ContentHash }}"
+  nft:
+    price: "{{ .Verification.NFT.Price }}"
+    maxSupply: {{ .Verification.NFT.MaxSupply }}
+    royaltyFee: {{ .Verification.NFT.RoyaltyFee }}
+    onePerAddress: {{ .Verification.NFT.OnePerAddress }}
+    version: "{{ .Verification.NFT.Version }}"
+    chainId: {{ .Verification.NFT.ChainId }}
+    tokenSymbol: "{{ .Verification.NFT.TokenSymbol }}"
+{{- end }}
 ---
 
-{{ .Title }}
-
+在这里写下你的文章内容...
 `
-
-type postData struct {
-	Title       string
-	Date        string
-	Description string
-	Tags        string
-	Series      string
-	SeriesOrder int
-	Draft       bool
-	Slug        string
-}
 
 func generateFileName(title string) string {
 	// 移除特殊字符，将空格替换为连字符
@@ -129,20 +145,29 @@ func generateFileName(title string) string {
 }
 
 func generatePostContent(title string) (string, error) {
-	// 准备模板数据
-	data := postData{
+	// 获取当前工作目录
+	projectDir, err := os.Getwd()
+	if err != nil {
+		return "", fmt.Errorf("failed to get working directory: %w", err)
+	}
+
+	// 加载配置文件
+	cfg, err := config.LoadConfig(filepath.Join(projectDir, "config.yaml"))
+	if err != nil {
+		return "", fmt.Errorf("failed to load config: %w", err)
+	}
+
+	// 创建新的 Post 实例
+	p := &post.Post{
 		Title:       title,
-		Date:        time.Now().Format("2006-01-02"),
+		Date:        time.Now(),
 		Description: postDesc,
 		Series:      postSeries,
 		SeriesOrder: postOrder,
+		Tags:        postTags,
 		Draft:       postDraft,
 		Slug:        postSlug,
-	}
-
-	// 处理标签
-	if len(postTags) > 0 {
-		data.Tags = fmt.Sprintf(`"%s"`, strings.Join(postTags, `", "`))
+		Verification: cfg.Verification,  // 从配置文件获取默认验证信息
 	}
 
 	// 解析模板
@@ -153,7 +178,7 @@ func generatePostContent(title string) (string, error) {
 
 	// 渲染模板
 	var buf strings.Builder
-	if err := tmpl.Execute(&buf, data); err != nil {
+	if err := tmpl.Execute(&buf, p); err != nil {
 		return "", fmt.Errorf("generatePostContent failed to execute template: %w", err)
 	}
 

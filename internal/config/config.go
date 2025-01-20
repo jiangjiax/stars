@@ -19,6 +19,7 @@ type NFTConfig struct {
 	OnePerAddress bool   `yaml:"onePerAddress"` // 每个地址限铸一个
 	Version       string `yaml:"version"`       // NFT 版本号
 	ChainId       int    `yaml:"chainId"`       // 链 ID
+	TokenSymbol   string `yaml:"tokenSymbol"`   // 代币符号，如 "ETH"、"BNB" 等
 }
 
 // Verification 表示内容验证信息
@@ -80,12 +81,29 @@ func (c *NFTConfig) ValidateNFTConfig() error {
 
 // GetDefaultNFTConfig 获取默认的 NFT 配置
 func GetDefaultNFTConfig() *NFTConfig {
+	cfg, err := LoadConfig("config.yaml")
+	if err == nil && cfg != nil && cfg.Verification != nil && cfg.Verification.NFT != nil {
+		// 从配置文件获取默认值
+		return &NFTConfig{
+			Price:         cfg.Verification.NFT.Price,
+			MaxSupply:     cfg.Verification.NFT.MaxSupply,
+			RoyaltyFee:    cfg.Verification.NFT.RoyaltyFee,
+			OnePerAddress: cfg.Verification.NFT.OnePerAddress,
+			Version:       cfg.Verification.NFT.Version,
+			ChainId:       cfg.Verification.NFT.ChainId,
+			TokenSymbol:   cfg.Verification.NFT.TokenSymbol,
+		}
+	}
+
+	// 如果配置文件中没有设置，使用硬编码的默认值
 	return &NFTConfig{
 		Price:         "0",
 		MaxSupply:     9999,
 		RoyaltyFee:    0,
 		OnePerAddress: true,
 		Version:       "1.0.0",
+		ChainId:       1,
+		TokenSymbol:   "ETH",  // 默认使用 ETH
 	}
 }
 
@@ -170,11 +188,17 @@ type Config struct {
 
 		// 联系方式
 		Contact struct {
-			Email    string `yaml:"email"`
-			WeChat   string `yaml:"wechat"` // 微信号
-			Phone    string `yaml:"phone"`
-			Telegram string `yaml:"telegram"` // Telegram 用户名
-			Twitter  string `yaml:"twitter"`  // Twitter 用户名
+			Email       string `yaml:"email"`
+			WeChat      string `yaml:"wechat"`
+			Phone       string `yaml:"phone"`
+			Telegram    string `yaml:"telegram"`
+			Twitter     string `yaml:"twitter"`
+			Bilibili    string `yaml:"bilibili"`     // B站用户名/UID
+			Weibo       string `yaml:"weibo"`        // 微博用户名/ID
+			Douyin      string `yaml:"douyin"`       // 抖音号
+			Xiaohongshu string `yaml:"xiaohongshu"`  // 小红书号
+			Juejin      string `yaml:"juejin"`       // 掘金用户名
+			Jike        string `yaml:"jike"`         // 即刻用户名
 		} `yaml:"contact"`
 
 		// 推荐的文章系列
@@ -199,6 +223,8 @@ type Config struct {
 	Newsletter Newsletter `yaml:"newsletter"`
 
 	SEO SEO `yaml:"seo"`
+
+	Verification *Verification `yaml:"verification"` // 使用指针允许为空
 }
 
 // Newsletter 表示邮件订阅配置

@@ -17,6 +17,7 @@ import (
 	"github.com/jiangjiax/stars/internal/post"
 	"github.com/jiangjiax/stars/internal/template"
 	"github.com/jiangjiax/stars/internal/template/funcs"
+	"github.com/jiangjiax/stars/internal/sitemap"
 )
 
 //go:embed templates/config.yaml templates/example-posts/* templates/default-theme/* templates/default-theme/**/*
@@ -137,6 +138,12 @@ func (p *Project) Generate() error {
 	vercelPath := filepath.Join(p.Path, "vercel.json")
 	if err := os.WriteFile(vercelPath, []byte(vercelConfig), 0644); err != nil {
 		return fmt.Errorf("failed to generate vercel.json: %w", err)
+	}
+
+	// 生成 sitemap
+	sitemapGen := sitemap.New(p.Site, p.Posts)
+	if err := sitemapGen.Generate(p.Path); err != nil {
+		return fmt.Errorf("failed to generate sitemap: %w", err)
 	}
 
 	// 标记生成成功

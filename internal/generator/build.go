@@ -10,6 +10,7 @@ import (
 	"github.com/jiangjiax/stars/internal/asset"
 	"github.com/jiangjiax/stars/internal/post"
 	"github.com/jiangjiax/stars/internal/rss"
+	"github.com/jiangjiax/stars/internal/sitemap"
 	"github.com/jiangjiax/stars/internal/template"
 )
 
@@ -77,6 +78,12 @@ func (b *Builder) Build() error {
 		feedPath,
 	); err != nil {
 		return fmt.Errorf("failed to generate RSS feed: %w", err)
+	}
+
+	// 生成 sitemap
+	sitemapGen := sitemap.New(b.project.Site, b.project.Posts)
+	if err := sitemapGen.Generate(b.publicDir); err != nil {
+		return fmt.Errorf("failed to generate sitemap: %w", err)
 	}
 
 	return nil

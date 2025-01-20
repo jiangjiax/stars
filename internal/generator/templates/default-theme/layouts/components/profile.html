@@ -189,6 +189,48 @@
                                 <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.WeChat }}</span>
                             </div>
                             {{ end }}
+
+                            {{ if .Site.Author.Contact.Bilibili }}
+                            <div class="flex items-center bg-stars-primary/30 rounded-lg px-4 py-2.5">
+                                <img src="{{ .StaticPath }}/icons/哔哩哔哩.svg" alt="bilibili" class="w-5 h-5">
+                                <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.Bilibili }}</span>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Author.Contact.Weibo }}
+                            <div class="flex items-center bg-stars-primary/30 rounded-lg px-4 py-2.5">
+                                <i class="fab fa-weibo w-5 text-[#EA4335]"></i>
+                                <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.Weibo }}</span>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Author.Contact.Douyin }}
+                            <div class="flex items-center bg-stars-primary/30 rounded-lg px-4 py-2.5">
+                                <i class="fab fa-tiktok w-5 text-white"></i>
+                                <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.Douyin }}</span>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Author.Contact.Xiaohongshu }}
+                            <div class="flex items-center bg-stars-primary/30 rounded-lg px-4 py-2.5">
+                                <img src="{{ .StaticPath }}/icons/小红书.svg" alt="xiaohongshu" class="w-5 h-5">
+                                <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.Xiaohongshu }}</span>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Author.Contact.Juejin }}
+                            <div class="flex items-center bg-stars-primary/30 rounded-lg px-4 py-2.5">
+                                <img src="{{ .StaticPath }}/icons/juejin.svg" alt="juejin" class="w-5 h-5">
+                                <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.Juejin }}</span>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Author.Contact.Jike }}
+                            <div class="flex items-center bg-stars-primary/30 rounded-lg px-4 py-2.5">
+                                <img src="{{ .StaticPath }}/icons/即刻.svg" alt="jike" class="w-5 h-5">
+                                <span class="ml-3 font-mono text-stars-muted text-sm">{{ .Site.Author.Contact.Jike }}</span>
+                            </div>
+                            {{ end }}
                         </div>
                     </div>
                 </div>

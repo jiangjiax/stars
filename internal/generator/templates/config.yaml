@@ -133,10 +133,16 @@ author:
   # 联系方式
   contact:
     email: "your.email@example.com"    # 邮箱
-    wechat: "your_wechat_id"           # 微信号
-    phone: "+86 xxx xxxx xxxx"         # 手机号
-    telegram: "your_telegram"          
-    twitter: "your_twitter"            
+    wechat: "your_wechat"              # 微信号
+    phone: "+86 138xxxx8888"           # 手机号
+    telegram: "your_telegram"           # Telegram用户名
+    twitter: "your_twitter"            # Twitter用户名
+    bilibili: "your_bilibili"          # B站用户名/UID
+    weibo: "your_weibo"                # 微博用户名/ID
+    douyin: "your_douyin"              # 抖音号
+    xiaohongshu: "your_xiaohongshu"    # 小红书号
+    juejin: "your_juejin"              # 掘金用户名
+    jike: "your_jike"                  # 即刻用户名
 
   # 推荐的文章系列
   recommendedSeries:
@@ -153,3 +159,18 @@ newsletter:
     username: ""  # Buttondown 用户名
     # apiKey: ""   # Buttondown API key (可选,用于后续功能扩展)
   description: "订阅获取最新文章更新"  # 订阅描述文本
+
+# 默认文章验证信息配置
+verification:
+  arweaveId: ""
+  nftContract: ""
+  author: ""
+  contentHash: ""
+  nft:
+    price: "0"
+    maxSupply: 100
+    royaltyFee: 1000
+    onePerAddress: true
+    version: "1.0.0"
+    chainId: 1
+    tokenSymbol: "ETH"  # 可以根据不同链修改，如 "BNB"、"MATIC" 等

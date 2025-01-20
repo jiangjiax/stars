@@ -185,7 +185,7 @@
                                 {{ if .Post.Verification.NFT.Price }}
                                 <div class="p-4 rounded-xl bg-stars-primary/10 border border-stars-accent/10">
                                     <div class="text-stars-muted text-sm mb-1">铸造价格</div>
-                                    <div class="text-stars-accent font-mono">{{ .Post.Verification.NFT.Price }} ETH</div>
+                                    <div class="text-stars-accent font-mono">{{ .Post.Verification.NFT.Price }} {{ .Post.Verification.NFT.TokenSymbol }}</div>
                                 </div>
                                 {{ end }}
 
