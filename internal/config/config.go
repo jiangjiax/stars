@@ -188,11 +188,17 @@ type Config struct {
 
 		// 联系方式
 		Contact struct {
-			Email    string `yaml:"email"`
-			WeChat   string `yaml:"wechat"` // 微信号
-			Phone    string `yaml:"phone"`
-			Telegram string `yaml:"telegram"` // Telegram 用户名
-			Twitter  string `yaml:"twitter"`  // Twitter 用户名
+			Email       string `yaml:"email"`
+			WeChat      string `yaml:"wechat"`
+			Phone       string `yaml:"phone"`
+			Telegram    string `yaml:"telegram"`
+			Twitter     string `yaml:"twitter"`
+			Bilibili    string `yaml:"bilibili"`     // B站用户名/UID
+			Weibo       string `yaml:"weibo"`        // 微博用户名/ID
+			Douyin      string `yaml:"douyin"`       // 抖音号
+			Xiaohongshu string `yaml:"xiaohongshu"`  // 小红书号
+			Juejin      string `yaml:"juejin"`       // 掘金用户名
+			Jike        string `yaml:"jike"`         // 即刻用户名
 		} `yaml:"contact"`
 
 		// 推荐的文章系列
