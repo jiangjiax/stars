@@ -510,7 +510,7 @@ func (p *Post) calculateContentHash() string {
 	data, _ := json.Marshal(content)
 	hasher.Write(data)
 	hash := hasher.Sum(nil)
-	return "0x" + hex.EncodeToString(hash)
+	return "0x" + hex.EncodeToString(hash) + p.Verification.NFT.Version
 }
 
 func (p *Post) parseMetadata(meta map[string]interface{}) error {

@@ -141,6 +141,9 @@ func (e *Engine) processTemplateData(data interface{}, kind, section string) (in
 		return data, nil
 	}
 
+	// 设置页面类型标志
+	m["IsPost"] = (kind == "single" && section == "posts")
+
 	if _, exists := m["Site"]; !exists {
 		m["Site"] = e.config
 	}
