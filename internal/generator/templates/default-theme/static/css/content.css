@@ -37,6 +37,12 @@
     color: var(--stars-accent);
 }
 
+/* 加粗 */
+.content strong {
+    font-weight: bold;
+    color: var(--stars-accent);
+}
+
 /* 段落 */
 .content p {
     margin: 1rem 0;
