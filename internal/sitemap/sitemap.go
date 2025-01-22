@@ -88,14 +88,14 @@ func (g *Generator) collectURLs() []URL {
 
 	// 添加文章列表页
 	urls = append(urls, URL{
-		Loc:        baseURL + "posts",
+		Loc:        baseURL + "/posts",
 		ChangeFreq: "daily",
 		Priority:   0.9,
 	})
 
 	// 添加标签页
 	urls = append(urls, URL{
-		Loc:        baseURL + "tags",
+		Loc:        baseURL + "/tags",
 		ChangeFreq: "weekly",
 		Priority:   0.8,
 	})
@@ -104,7 +104,7 @@ func (g *Generator) collectURLs() []URL {
 	for _, p := range g.posts {
 		if !p.Draft {
 			urls = append(urls, URL{
-				Loc:        baseURL + "posts/" + p.Slug,
+				Loc:        baseURL + "/posts/" + p.Slug,
 				LastMod:    p.Date.Format("2006-01-02"),
 				ChangeFreq: "monthly",
 				Priority:   0.7,
