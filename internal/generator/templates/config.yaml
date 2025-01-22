@@ -1,6 +1,6 @@
 title: "my-blog"  # 博客标题
 description: "A Stars Web3 blog"  # 网站描述
-baseURL: "/"  # 网站根路径
+baseURL: "/"  # 网站域名
 theme: "default"  # 主题名称
 
 # SEO 配置
