@@ -6,12 +6,14 @@
     --stars-gold: #ffd700;
     --stars-text: #ccd6f6;
     --stars-muted: #8892b0;
+    color-scheme: dark;
 }
 
 /* 基础样式 */
 body {
     @apply bg-stars-primary text-stars-text min-h-screen;
     font-family: 'Space Mono', monospace;
+    background-color: var(--stars-primary) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
