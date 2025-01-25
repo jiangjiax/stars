@@ -306,13 +306,22 @@
     }
 } 
 
-/* 目录样式 */
+/* 目录容器样式 */
 .table-of-contents-wrapper {
-    @apply bg-stars-primary/30 backdrop-blur-sm rounded-lg p-4 max-w-xs;
+    @apply bg-stars-primary/30 backdrop-blur-sm rounded-lg p-4;
+    position: sticky;
+    top: 100px; /* 与顶部导航保持距离 */
 }
 
+/* 目录标题 */
+.table-of-contents-wrapper .text-lg {
+    @apply mb-4;
+}
+
+/* 目录导航容器 */
 .table-of-contents {
-    @apply text-stars-text max-h-[calc(100vh-12rem)] overflow-y-auto;
+    @apply text-stars-text overflow-y-auto;
+    max-height: calc(100vh - 200px); /* 设置最大高度，减去顶部导航、标题和padding的高度 */
 }
 
 .table-of-contents ul {
