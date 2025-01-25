@@ -94,7 +94,7 @@ npm --version
 go install github.com/jiangjiax/stars/cmd/stars@latest
 
 # 验证安装
-stars -v
+stars -h
 ```
 
 ## 创建新网站
