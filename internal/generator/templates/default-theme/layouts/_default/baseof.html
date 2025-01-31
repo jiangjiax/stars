@@ -36,6 +36,9 @@
     <link rel="alternate" type="application/rss+xml" 
         title="{{ .Site.Title }}" 
         href="{{ .Site.BaseURL }}/feed.xml">
+
+    <!-- 修改 ABI 路径 meta 标签 -->
+    <meta name="abi-path" content="{{ .StaticPath }}/dist/{{ AssetPath "ArticleNFT.json" }}">
 </head>
 <body class="bg-white dark:bg-gray-900 min-h-full flex flex-col">
     <!-- 星空背景容器 -->
