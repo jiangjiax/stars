@@ -23,6 +23,7 @@ async function loadContractABI() {
     try {
         // 使用资源哈希版本的文件名
         const abiPath = document.querySelector('meta[name="abi-path"]').content;
+        console.log("abiPath:",abiPath)
         const response = await fetch(`${abiPath}`);
         const data = await response.json();
         return data.abi;

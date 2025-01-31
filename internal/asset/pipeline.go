@@ -150,7 +150,7 @@ func (p *Pipeline) CleanOldAssets() error {
 	return nil
 }
 
-// 添加新方法处理 ABI 文件
+// processABIFiles 处理 ABI 文件
 func (p *Pipeline) processABIFiles() error {
 	// ABI 文件源目录
 	abiDir := filepath.Join(p.projectDir, "themes", p.theme, "static", "abi")
