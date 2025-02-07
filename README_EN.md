@@ -1,17 +1,17 @@
-# Stars(繁星) - Web3 个人网站生成器
+# Stars - Web3 Personal Website Generator
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Release](https://img.shields.io/github/v/release/jiangjiax/stars)](https://github.com/jiangjiax/stars/releases)
 
-[English](./README_EN.md) | 简体中文
+English | [简体中文](./README.md)
 
-## 项目概述
+## Overview
 
-Stars(繁星)是一个基于 Go 语言开发的去中心化个人网站生成器，支持 Web3 功能。它能帮助你快速创建一个现代化的个人网站，并提供 Web3 集成功能。本项目旨在为创作者提供一个去中心化的内容发布平台。
+Stars is a decentralized personal website generator developed in Go, with Web3 functionality. It helps you quickly create a modern personal website with Web3 integration. This project aims to provide creators with a decentralized content publishing platform.
 
-### 智能合约
+### Smart Contracts
 
-Stars 项目支持多链部署的 NFT 合约系统，用户可以在文章的元数据中填写 Stars 官方部署的 NFT 合约地址，也可以自行部署。
+Stars supports multi-chain NFT contract deployment. Users can use the officially deployed NFT contract addresses in their article metadata, or deploy their own.
 
 - **Ethereum Sepolia**
   - Address: `0x5c83f2287833F567b1D80D7B981084eb5CaeF445`
@@ -31,30 +31,30 @@ Stars 项目支持多链部署的 NFT 合约系统，用户可以在文章的元
   - [TelosScan](https://edu-chain-testnet.blockscout.com/address/0xcA3Dbe8eF976e606B8c96052aaC22763aDeAEE0A)
   - Chain ID: 656476
 
-### 主要特性
+### Key Features
 
-🚀 **高性能静态站点生成器**
+🚀 **High-Performance Static Site Generator**
 
-🎨 **现代化主题系统**
+🎨 **Modern Theme System**
 
-📱 **移动适配**
+📱 **Mobile Responsive**
 
-🔗 **Web3 功能集成**
+🔗 **Web3 Integration**
 
-🛠 **开发者友好**
+🛠 **Developer Friendly**
 
-### 贡献指南
+### Contributing
 
-我们欢迎所有形式的贡献，无论是新功能、文档改进还是问题报告。请查看我们的[贡献指南](./CONTRIBUTING.md)了解更多信息。
+We welcome all forms of contributions, whether it's new features, documentation improvements, or bug reports. Please check our [Contributing Guide](./CONTRIBUTING.md) for more information.
 
-### 贡献者
+### Contributors
 
-感谢以下贡献者的支持：
+Thanks to all contributors:
 
 <a href="https://github.com/jiangjiax/stars/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=jiangjiax/stars" />
 </a>
 
-## 快速开始
+## Quick Start
 
-[Stars 入门](./internal/generator/templates/example-posts/stars/welcome.md)
+[Getting Started with Stars](./internal/generator/templates/example-posts/stars/welcome.md) 
